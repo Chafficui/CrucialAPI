@@ -32,6 +32,25 @@ public class Files {
         return YamlConfiguration.loadConfiguration(file);
     }
 
+    public static YamlConfiguration setupYaml(File dataFolder, String name){
+        if(!dataFolder.exists()){
+            dataFolder.mkdir();
+        }
+
+        File file = new File(dataFolder, name);
+
+        if(!file.exists()){
+            try{
+                file.createNewFile();
+                logger.info("Successfully created " + name);
+            } catch (IOException e) {
+                logger.severe("Error 11: Could not create " + name);
+            }
+        }
+
+        return YamlConfiguration.loadConfiguration(file);
+    }
+
     /**
      * Will be replaced very soon
      * Don't use
