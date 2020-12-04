@@ -1,0 +1,6 @@
+name: ${project.artifactId}
+version: ${project.version}
+author:  ${project.name}
+prefix: CrucialAPI
+main: de.crucial.CrucialAPI.Main
+api-version: 1.13
