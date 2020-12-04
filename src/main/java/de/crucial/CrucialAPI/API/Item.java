@@ -25,6 +25,15 @@ public class Item {
         }
     }
 
+    public boolean addCustomItem(int id, String name, ItemStack stack, String[] ingredients){
+        try{
+            return addRecipe(id, name, ingredients, stack);
+        } catch(IllegalArgumentException e) {
+            logger.info("Failed to create " + name);
+            return false;
+        }
+    }
+
     public boolean addCustomItem(int id, String name, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name);

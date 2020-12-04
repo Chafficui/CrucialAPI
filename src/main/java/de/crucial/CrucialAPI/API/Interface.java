@@ -8,7 +8,7 @@ import java.util.List;
 public class Interface {
 
     public static void showText(Player player, String title, String subTitle){
-        TitleUtils.sendTitle(player, 10, 40, 40, title, subTitle);
+        TitleUtils.sendTitle(player, 10, 40, 10, title, subTitle);
     }
 
     public static void showText(Player player, String title, String subTitle, int seconds){

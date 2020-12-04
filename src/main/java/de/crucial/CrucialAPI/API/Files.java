@@ -13,12 +13,12 @@ public class Files {
     private static Main plugin = Main.getPlugin(Main.class);
     private static Logger logger = Server.getLogger("CrucialAPI");
 
-    public static YamlConfiguration setupYaml(File dataFolder, String path){
-        if(!dataFolder.exists()){
+    public static YamlConfiguration setupYaml(File dataFolder, String path, String name){
+        if(!new File(dataFolder, path).exists()){
             dataFolder.mkdir();
         }
 
-        File file = new File(dataFolder, path);
+        File file = new File(dataFolder, path + name);
 
         if(!file.exists()){
             try{

@@ -25,6 +25,7 @@ public class Effects {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
+                    setBlood(player, 0);
                     removeBlood(player);
                 }
             }, (long) (seconds*20));
