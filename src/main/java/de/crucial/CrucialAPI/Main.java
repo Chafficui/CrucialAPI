@@ -1,10 +1,8 @@
 package de.crucial.CrucialAPI;
 
-import de.crucial.CrucialAPI.API.Files;
 import de.crucial.CrucialAPI.API.Server;
 import de.crucial.CrucialAPI.API.Stats;
 import de.crucial.CrucialAPI.API.Updater;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {

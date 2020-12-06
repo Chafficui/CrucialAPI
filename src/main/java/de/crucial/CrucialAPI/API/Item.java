@@ -12,15 +12,15 @@ import java.util.logging.Logger;
 
 public class Item {
 
-    private static Main plugin = Main.getPlugin(Main.class);
-    private static Logger logger = Server.getLogger("CrucialAPI");
+    private static final Main PLUGIN = Main.getPlugin(Main.class);
+    private static final Logger LOGGER = Server.getLogger("CrucialAPI");
 
-    public static boolean addCustomItem(String id, String name, List lore, String material, String[] ingredients){
+    public static boolean addCustomItem(String id, String name, List<String> lore, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
-            logger.info("Failed to create " + name);
+            LOGGER.info("Failed to create " + name);
             return false;
         }
     }
@@ -30,7 +30,7 @@ public class Item {
         try{
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
-            logger.info("Failed to create " + name);
+            LOGGER.info("Failed to create " + name);
             return false;
         }
     }
@@ -40,23 +40,23 @@ public class Item {
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name);
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
-            logger.info("Failed to create " + name);
+            LOGGER.info("Failed to create " + name);
             return false;
         }
     }
 
-    public static boolean addCustomHead(String id, String name, List lore, String head, String[] ingredients){
+    public static boolean addCustomHead(String id, String name, List<String> lore, String head, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(head, name, lore);
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
-            logger.info("Failed to create " + name);
+            LOGGER.info("Failed to create " + name);
             return false;
         }
     }
 
     private static boolean addRecipe(String id, String name, String[] ingredients, ItemStack stack) {
-        NamespacedKey key = new NamespacedKey(plugin, name + id);
+        NamespacedKey key = new NamespacedKey(PLUGIN, name + id);
         ShapedRecipe recipe = new ShapedRecipe(key, stack);
         int num = 47;
 
@@ -68,7 +68,7 @@ public class Item {
         }
 
         Bukkit.addRecipe(recipe);
-        logger.info("Successfully created " + name + " (key: " + name+id + ")");
+        LOGGER.info("Successfully created " + name + " (key: " + name+id + ")");
         return true;
     }
 }

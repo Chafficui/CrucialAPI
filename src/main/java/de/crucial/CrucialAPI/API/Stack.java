@@ -25,7 +25,7 @@ public class Stack {
         return getCleanMeta(stack, meta);
     }
 
-    public static ItemStack setStack(Material material, String name, List lore){
+    public static ItemStack setStack(Material material, String name, List<String> lore){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName(name);
@@ -33,7 +33,7 @@ public class Stack {
         return getCleanMeta(stack, meta);
     }
 
-    public static ItemStack setStack(String head, String name, List lore){
+    public static ItemStack setStack(String head, String name, List<String> lore){
         ItemStack stack = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
         SkullMeta meta = (SkullMeta) stack.getItemMeta();
 
@@ -42,6 +42,7 @@ public class Stack {
 
         meta.setDisplayName(name);
         meta.setOwner(head);
+        meta.setLore(lore);
         stack.setItemMeta(meta);
 
         return stack;
@@ -52,12 +53,13 @@ public class Stack {
      * Do not use
      */
     @Deprecated
-    public static ItemStack setStack(Material material, String name, List lore, boolean shiny){
+    public static ItemStack setStack(Material material, String name, List<String> lore, boolean shiny){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName(name);
         meta.setLore(lore);
-        if(shiny)meta.addEnchant(Enchantment.DURABILITY, 0, true);
+        if(shiny)
+            meta.addEnchant(Enchantment.DURABILITY, 0, true);
         return getCleanMeta(stack, meta);
     }
 
