@@ -14,8 +14,12 @@ public class Files {
     private static Logger logger = Server.getLogger("CrucialAPI");
 
     public static YamlConfiguration setupYaml(File dataFolder, String path, String name){
-        if(!new File(dataFolder, path).exists()){
+        if(!dataFolder.exists()){
             dataFolder.mkdir();
+        }
+
+        if(!(new File(dataFolder, path).exists())){
+            new File(dataFolder, path).mkdir();
         }
 
         File file = new File(dataFolder, path + name);
@@ -23,9 +27,9 @@ public class Files {
         if(!file.exists()){
             try{
                 file.createNewFile();
-                logger.info("Successfully created " + path);
+                logger.info("Successfully created " + path + name);
             } catch (IOException e) {
-                logger.severe("Error 11: Could not create " + path);
+                logger.severe("Error 11: Could not create " + path + name);
             }
         }
 

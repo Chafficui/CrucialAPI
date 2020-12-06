@@ -6,7 +6,7 @@
 
     <groupId>de.chaffic</groupId>
     <artifactId>CrucialAPI</artifactId>
-    <version>1.0</version>
+    <version>0.1</version>
     <name>ChafficPlugins</name>
     <packaging>jar</packaging>
     <properties>
