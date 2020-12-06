@@ -15,7 +15,7 @@ public class Item {
     private static Main plugin = Main.getPlugin(Main.class);
     private static Logger logger = Server.getLogger("CrucialAPI");
 
-    public boolean addCustomItem(int id, String name, List lore, String material, String[] ingredients){
+    public static boolean addCustomItem(String id, String name, List lore, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
             return addRecipe(id, name, ingredients, stack);
@@ -25,7 +25,8 @@ public class Item {
         }
     }
 
-    public boolean addCustomItem(int id, String name, ItemStack stack, String[] ingredients){
+    public static boolean addCustomItem(String id, ItemStack stack, String[] ingredients){
+        String name = stack.getItemMeta().getDisplayName();
         try{
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
@@ -34,7 +35,7 @@ public class Item {
         }
     }
 
-    public boolean addCustomItem(int id, String name, String material, String[] ingredients){
+    public boolean addCustomItem(String id, String name, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name);
             return addRecipe(id, name, ingredients, stack);
@@ -44,7 +45,7 @@ public class Item {
         }
     }
 
-    public boolean addCustomHead(int id, String name, List lore, String head, String[] ingredients){
+    public static boolean addCustomHead(String id, String name, List lore, String head, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(head, name, lore);
             return addRecipe(id, name, ingredients, stack);
@@ -54,7 +55,7 @@ public class Item {
         }
     }
 
-    public boolean addRecipe(int id, String name, String[] ingredients, ItemStack stack) {
+    private static boolean addRecipe(String id, String name, String[] ingredients, ItemStack stack) {
         NamespacedKey key = new NamespacedKey(plugin, name + id);
         ShapedRecipe recipe = new ShapedRecipe(key, stack);
         int num = 47;
