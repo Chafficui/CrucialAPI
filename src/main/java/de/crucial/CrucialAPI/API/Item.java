@@ -20,6 +20,7 @@ public class Item {
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
+            e.printStackTrace();
             LOGGER.info("Failed to create " + name);
             return false;
         }
@@ -30,6 +31,7 @@ public class Item {
         try{
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
+            e.printStackTrace();
             LOGGER.info("Failed to create " + name);
             return false;
         }
@@ -40,6 +42,7 @@ public class Item {
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name);
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
+            e.printStackTrace();
             LOGGER.info("Failed to create " + name);
             return false;
         }
@@ -50,21 +53,24 @@ public class Item {
             ItemStack stack = Stack.setStack(head, name, lore);
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
+            e.printStackTrace();
             LOGGER.info("Failed to create " + name);
             return false;
         }
     }
 
     private static boolean addRecipe(String id, String name, String[] ingredients, ItemStack stack) {
+        name = name.replaceAll(" ", "_");
         NamespacedKey key = new NamespacedKey(PLUGIN, name + id);
         ShapedRecipe recipe = new ShapedRecipe(key, stack);
-        int num = 47;
+        int num = 48;
 
         recipe.shape("123","456","789");
 
         for (String item:ingredients) {
             num++;
-            recipe.setIngredient((char) num, Material.getMaterial(item));
+            char c = (char)num;
+            recipe.setIngredient(c, Material.getMaterial(item));
         }
 
         Bukkit.addRecipe(recipe);

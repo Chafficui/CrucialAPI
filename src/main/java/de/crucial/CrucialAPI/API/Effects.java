@@ -15,6 +15,7 @@ public class Effects {
     }
 
     public static void removeBlood(Player player){
+        functions.setBorder(player, 0);
         functions.removeBorder(player);
     }
 

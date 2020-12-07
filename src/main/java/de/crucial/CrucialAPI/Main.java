@@ -11,11 +11,11 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         Server.getLogger("CrucialAPI").info("Enabled");
         Stats.addChart(9549, this, "Name", (String) getServer().getName());
+        Updater.update(this, 86380, getFile());
     }
 
     @Override
     public void onDisable() {
-        Updater.update(this, 86380, getFile());
         Server.getLogger("CrucialAPI").info("Disabled");
     }
 }
