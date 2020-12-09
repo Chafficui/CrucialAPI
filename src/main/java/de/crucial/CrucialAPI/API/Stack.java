@@ -21,6 +21,7 @@ public class Stack {
     public static ItemStack setStack(Material material, String name){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
+        assert meta != null;
         meta.setDisplayName(name);
         return getCleanMeta(stack, meta);
     }
@@ -28,6 +29,7 @@ public class Stack {
     public static ItemStack setStack(Material material, String name, List<String> lore){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
+        assert meta != null;
         meta.setDisplayName(name);
         meta.setLore(lore);
         return getCleanMeta(stack, meta);
@@ -56,6 +58,7 @@ public class Stack {
     public static ItemStack setStack(Material material, String name, List<String> lore, boolean shiny){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
+        assert meta != null;
         meta.setDisplayName(name);
         meta.setLore(lore);
         if(shiny)

@@ -10,11 +10,7 @@ public class Stats {
     public static void addChart(int pluginID, JavaPlugin plugin, String name, String data){
         try {
             StatUtils metrics = new StatUtils(plugin, pluginID);
-            metrics.addCustomChart(new StatUtils.SimplePie(name, new Callable<String>() {
-                public String call() throws Exception {
-                    return data;
-                }
-            }));
+            metrics.addCustomChart(new StatUtils.SimplePie(name, () -> data));
         } catch(Exception e) {
             Server.getLogger("CrucialAPI").severe("Error 004: Failed to submit stats.");
         }
