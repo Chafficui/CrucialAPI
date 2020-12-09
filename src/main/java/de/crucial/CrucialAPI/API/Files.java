@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 
 public class Files {
 
-    private static Main plugin = Main.getPlugin(Main.class);
-    private static Logger logger = Server.getLogger("CrucialAPI");
+    private static final Main plugin = Main.getPlugin(Main.class);
+    private static final Logger logger = Server.getLogger("CrucialAPI");
 
     public static YamlConfiguration setupYaml(File dataFolder, String path, String name){
         if(!dataFolder.exists()){
@@ -27,9 +27,9 @@ public class Files {
         if(!file.exists()){
             try{
                 file.createNewFile();
-                logger.info("Successfully created " + path + name);
+                logger.info("Successfully created " + dataFolder + path + name);
             } catch (IOException e) {
-                logger.severe("Error 11: Could not create " + path + name);
+                logger.severe("Error 11: Could not create " + dataFolder + path + name);
             }
         }
 
@@ -46,9 +46,9 @@ public class Files {
         if(!file.exists()){
             try{
                 file.createNewFile();
-                logger.info("Successfully created " + name);
+                logger.info("Successfully created " + dataFolder + name);
             } catch (IOException e) {
-                logger.severe("Error 11: Could not create " + name);
+                logger.severe("Error 11: Could not create " + dataFolder + name);
             }
         }
 
