@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class Item {
@@ -27,7 +28,7 @@ public class Item {
     }
 
     public static boolean addCustomItem(String id, ItemStack stack, String[] ingredients){
-        String name = stack.getItemMeta().getDisplayName();
+        String name = Objects.requireNonNull(stack.getItemMeta()).getDisplayName();
         try{
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
@@ -70,7 +71,7 @@ public class Item {
         for (String item:ingredients) {
             num++;
             char c = (char)num;
-            recipe.setIngredient(c, Material.getMaterial(item));
+            recipe.setIngredient(c, Objects.requireNonNull(Material.getMaterial(item)));
         }
 
         Bukkit.addRecipe(recipe);
