@@ -2,20 +2,24 @@ package de.crucial.CrucialAPI;
 
 import de.crucial.CrucialAPI.API.Server;
 import de.crucial.CrucialAPI.API.Stats;
-import de.crucial.CrucialAPI.API.Updater;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
         Server.getLogger("CrucialAPI").info("Enabled");
-        Stats.addChart(9549, this, "Name", (String) getServer().getName());
-        Updater.update(this, 86380, getFile());
+        Stats.setMetrics(this, 9549);
     }
 
     @Override
     public void onDisable() {
         Server.getLogger("CrucialAPI").info("Disabled");
+    }
+
+    public File getFileH(){
+        return getFile();
     }
 }
