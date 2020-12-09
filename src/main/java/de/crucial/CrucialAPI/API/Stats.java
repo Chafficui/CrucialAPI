@@ -3,13 +3,30 @@ package de.crucial.CrucialAPI.API;
 import de.crucial.CrucialAPI.Utils.StatUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.concurrent.Callable;
-
 public class Stats {
+    private static StatUtils metrics;
 
+    public static void setMetrics(JavaPlugin plugin, int pluginID){
+        metrics = new StatUtils(plugin, pluginID);
+    }
+
+    /**
+     * Outdated!
+     * Use setMetrics(JavaPlugin, int) to connect to Bstats
+     * Use addChart(String, String) to add Chart
+     */
+    @Deprecated
     public static void addChart(int pluginID, JavaPlugin plugin, String name, String data){
         try {
-            StatUtils metrics = new StatUtils(plugin, pluginID);
+            metrics = new StatUtils(plugin, pluginID);
+            metrics.addCustomChart(new StatUtils.SimplePie(name, () -> data));
+        } catch(Exception e) {
+            Server.getLogger("CrucialAPI").severe("Error 004: Failed to submit stats.");
+        }
+    }
+
+    public static void addChart(String name, String data){
+        try {
             metrics.addCustomChart(new StatUtils.SimplePie(name, () -> data));
         } catch(Exception e) {
             Server.getLogger("CrucialAPI").severe("Error 004: Failed to submit stats.");
