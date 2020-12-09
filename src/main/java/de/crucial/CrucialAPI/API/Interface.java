@@ -3,8 +3,6 @@ package de.crucial.CrucialAPI.API;
 import de.crucial.CrucialAPI.Utils.TitleUtils;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
 public class Interface {
 
     public static void showText(Player player, String title, String subTitle){
@@ -58,6 +56,7 @@ public class Interface {
     }
 
     public static void setDisplayName(Player player, String name){
-
+        player.setCustomName(name);
+        player.setCustomNameVisible(true);
     }
 }
