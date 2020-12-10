@@ -33,44 +33,23 @@ public class Effects {
     }
 
     public static void showParticles(Player player, Particle type){
-        player.spawnParticle(type, player.getLocation(), 50);
-    }
-
-    public static void showParticles(Player player, Particle type, Color color){
-        player.spawnParticle(type, player.getLocation(), 50, color);
+        player.getWorld().spawnParticle(type, player.getLocation(), 50);
     }
 
     public static void showParticles(Player player, Particle type, int amount){
-        player.spawnParticle(type, player.getLocation(), amount);
-    }
-
-    public static void showParticles(Player player, Particle type, int amount, Color color){
-        player.spawnParticle(type, player.getLocation(), amount, color);
+        player.getWorld().spawnParticle(type, player.getLocation(), amount);
     }
 
     public static void showParticles(Player player, Particle type, int amount, int seconds){
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             for (int i = 0; i < seconds*5; i++){
-                player.spawnParticle(type, player.getLocation(), amount);
+                player.getWorld().spawnParticle(type, player.getLocation(), amount);
                 try{
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        });
-    }
-
-    public static void showParticles(Player player, Particle type, int amount, int seconds, Color color){
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            for (int i = 0; i < seconds*5; i++){
-                player.spawnParticle(type, player.getLocation(), amount, color);
-                try{
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        }).cancel();
     }
 }

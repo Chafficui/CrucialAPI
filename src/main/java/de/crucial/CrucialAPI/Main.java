@@ -2,6 +2,7 @@ package de.crucial.CrucialAPI;
 
 import de.crucial.CrucialAPI.API.Server;
 import de.crucial.CrucialAPI.API.Stats;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -16,6 +17,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getScheduler().cancelTasks(this);
         Server.getLogger("CrucialAPI").info("Disabled");
     }
 
