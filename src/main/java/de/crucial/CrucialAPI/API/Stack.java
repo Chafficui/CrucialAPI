@@ -67,7 +67,6 @@ public class Stack {
     }
 
     private static ItemStack getCleanMeta(ItemStack stack, ItemMeta meta) {
-        meta.addEnchant(Enchantment.DURABILITY, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addItemFlags(ItemFlag.HIDE_DESTROYS);

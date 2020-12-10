@@ -22,7 +22,8 @@ public class Crucial {
     }
 
     public static void getVersion(String version, JavaPlugin plugin){
-        if(version != PLUGIN.getDescription().getVersion()) {
+        if(!version.equals(PLUGIN.getDescription().getVersion())) {
+            System.out.println(PLUGIN.getDescription().getVersion() + " oder " + version);
             try {
                 URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
                 ReadableByteChannel rbc = Channels.newChannel(website.openStream());
@@ -31,8 +32,8 @@ public class Crucial {
             } catch (IOException e) {
                 LOGGER.severe("Error 28: Failed to update CrucialAPI");
             }
-            Bukkit.getPluginManager().disablePlugin(PLUGIN);
             Bukkit.getPluginManager().disablePlugin(plugin);
+            Bukkit.getPluginManager().disablePlugin(PLUGIN);
         }
     }
 }
