@@ -49,6 +49,6 @@ public class Effects {
                     e.printStackTrace();
                 }
             }
-        }).cancel();
+        });
     }
 }
