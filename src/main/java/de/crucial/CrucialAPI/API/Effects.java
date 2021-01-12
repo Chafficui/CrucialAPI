@@ -3,7 +3,6 @@ package de.crucial.CrucialAPI.API;
 import de.crucial.CrucialAPI.Main;
 import de.crucial.CrucialAPI.Utils.BorderUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
@@ -28,22 +27,22 @@ public class Effects {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 setBlood(player, 0);
                 removeBlood(player);
-            }, (long) (seconds*20));
+            }, (long)seconds*20L);
         }
     }
 
     public static void showParticles(Player player, Particle type){
-        player.getWorld().spawnParticle(type, player.getLocation(), 50);
+        player.getWorld().spawnParticle(type, player.getEyeLocation(), 50);
     }
 
     public static void showParticles(Player player, Particle type, int amount){
-        player.getWorld().spawnParticle(type, player.getLocation(), amount);
+        player.getWorld().spawnParticle(type, player.getEyeLocation(), amount);
     }
 
     public static void showParticles(Player player, Particle type, int amount, int seconds){
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             for (int i = 0; i < seconds*5; i++){
-                player.getWorld().spawnParticle(type, player.getLocation(), amount);
+                player.getWorld().spawnParticle(type, player.getEyeLocation(), amount);
                 try{
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
