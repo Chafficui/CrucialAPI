@@ -19,7 +19,8 @@ public class Item {
     public static boolean addCustomItem(String id, String name, List<String> lore, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
-            return addRecipe(id, name, ingredients, stack);
+            addRecipe(id, name, ingredients, stack);
+            return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
             LOGGER.info("Failed to create " + name);
@@ -30,7 +31,8 @@ public class Item {
     public static boolean addCustomItem(String id, ItemStack stack, String[] ingredients){
         String name = Objects.requireNonNull(stack.getItemMeta()).getDisplayName();
         try{
-            return addRecipe(id, name, ingredients, stack);
+            addRecipe(id, name, ingredients, stack);
+            return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
             LOGGER.info("Failed to create " + name);
@@ -38,10 +40,22 @@ public class Item {
         }
     }
 
-    public boolean addCustomItem(String id, String name, String material, String[] ingredients){
+    public static NamespacedKey addCustomItemNSK(String id, String name, List<String> lore, String material, String[] ingredients){
+        try{
+            ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
+            return addRecipe(id, name, ingredients, stack);
+        } catch(IllegalArgumentException e) {
+            e.printStackTrace();
+            LOGGER.info("Failed to create " + name);
+            return null;
+        }
+    }
+
+    public static boolean addCustomItem(String id, String name, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name);
-            return addRecipe(id, name, ingredients, stack);
+            addRecipe(id, name, ingredients, stack);
+            return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
             LOGGER.info("Failed to create " + name);
@@ -52,7 +66,8 @@ public class Item {
     public static boolean addCustomHead(String id, String name, List<String> lore, String head, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(head, name, lore);
-            return addRecipe(id, name, ingredients, stack);
+            addRecipe(id, name, ingredients, stack);
+            return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
             LOGGER.info("Failed to create " + name);
@@ -60,7 +75,7 @@ public class Item {
         }
     }
 
-    private static boolean addRecipe(String id, String name, String[] ingredients, ItemStack stack) {
+    private static NamespacedKey addRecipe(String id, String name, String[] ingredients, ItemStack stack) {
         name = name.replaceAll(" ", "_");
         NamespacedKey key = new NamespacedKey(PLUGIN, name + id);
         ShapedRecipe recipe = new ShapedRecipe(key, stack);
@@ -76,6 +91,6 @@ public class Item {
 
         Bukkit.addRecipe(recipe);
         LOGGER.info("Successfully created " + name + " (key: " + name+id + ")");
-        return true;
+        return key;
     }
 }
