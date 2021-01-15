@@ -2,12 +2,15 @@ package de.crucial.CrucialAPI;
 
 import de.crucial.CrucialAPI.API.Server;
 import de.crucial.CrucialAPI.API.Stats;
+import de.crucial.CrucialAPI.Interfaces.CrucialItem;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
+    private ArrayList<CrucialItem> crucialItems = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -23,5 +26,13 @@ public class Main extends JavaPlugin {
 
     public File getFileH(){
         return getFile();
+    }
+
+    public ArrayList<CrucialItem> getCrucialItems() {
+        return crucialItems;
+    }
+
+    public void setCrucialItems(ArrayList<CrucialItem> crucialItems) {
+        this.crucialItems = crucialItems;
     }
 }

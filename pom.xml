@@ -6,7 +6,7 @@
 
     <groupId>de.chaffic</groupId>
     <artifactId>CrucialAPI</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
     <name>ChafficPlugins</name>
     <packaging>jar</packaging>
     <properties>
@@ -58,6 +58,16 @@
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.chaffic</groupId>
+            <artifactId>MyTrip</artifactId>
+            <version>0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>de.crucialg</groupId>
+            <artifactId>MyRPG</artifactId>
+            <version>Early Access</version>
         </dependency>
     </dependencies>
 </project>
