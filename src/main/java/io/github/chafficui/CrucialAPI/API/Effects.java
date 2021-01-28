@@ -3,6 +3,7 @@ package io.github.chafficui.CrucialAPI.API;
 import io.github.chafficui.CrucialAPI.Main;
 import io.github.chafficui.CrucialAPI.Utils.BorderUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
@@ -43,6 +44,27 @@ public class Effects {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             for (int i = 0; i < seconds*5; i++){
                 player.getWorld().spawnParticle(type, player.getEyeLocation(), amount);
+                try{
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void showParticles(Location location, Particle type){
+        location.getWorld().spawnParticle(type, location, 50);
+    }
+
+    public static void showParticles(Location location, Particle type, int amount){
+        location.getWorld().spawnParticle(type, location, amount);
+    }
+
+    public static void showParticles(Location location, Particle type, int amount, int seconds){
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            for (int i = 0; i < seconds*5; i++){
+                location.getWorld().spawnParticle(type, location, amount);
                 try{
                     Thread.sleep(200);
                 } catch (InterruptedException e) {

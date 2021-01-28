@@ -16,13 +16,13 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Server.getLogger("CrucialAPI").info("Enabled");
+        getLogger().info("Enabled");
         Stats.setMetrics(this, 9549);
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
                 for (CrucialItem cItem: CItem.getRegisteredCrucialItems()) {
-                    cItem.reload();
+                    cItem.register();
                 }
             }
         };
@@ -31,7 +31,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
-        Server.getLogger("CrucialAPI").info("Disabled");
+        getLogger().info("Disabled");
     }
 
     public File getFileH(){

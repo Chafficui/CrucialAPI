@@ -29,6 +29,10 @@ public class Server {
         return false;
     }
 
+    /**
+     * Useless
+     */
+    @Deprecated
     public static Logger getLogger(String name){
         return Logger.getLogger(name);
     }

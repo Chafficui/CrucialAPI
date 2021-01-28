@@ -1,5 +1,6 @@
 package io.github.chafficui.CrucialAPI.Interfaces;
 
+import io.github.chafficui.CrucialAPI.API.CItem;
 import io.github.chafficui.CrucialAPI.API.Item;
 import io.github.chafficui.CrucialAPI.API.Stack;
 import org.bukkit.Bukkit;
@@ -15,6 +16,10 @@ import java.util.Objects;
 
 public class CrucialItem {
 
+    /**
+     * Use register()
+    */
+    @Deprecated
     public final static class Builder {
         private static String name = "undefined";
         private static String material = "DIRT";
@@ -56,7 +61,7 @@ public class CrucialItem {
 
         public CrucialItem build(){
             CrucialItem crucialItem = new CrucialItem();
-            crucialItem.name = Builder.name.replaceAll("#space#", " ");
+            crucialItem.name = name;
             crucialItem.material = Builder.material;
             crucialItem.lore = Builder.lore;
             crucialItem.crafting = Builder.crafting;
@@ -66,9 +71,6 @@ public class CrucialItem {
             if(m[0].equals("HEAD")){
                 crucialItem.isHead = true;
                 crucialItem.material = m[1];
-                crucialItem.namespacedKey = Item.addCustomHeadNSK(crucialItem.id, crucialItem.name, crucialItem.lore, crucialItem.material, crucialItem.crafting);
-            } else {
-                crucialItem.namespacedKey = Item.addCustomItemNSK(crucialItem.id, crucialItem.name, crucialItem.lore, crucialItem.material, crucialItem.crafting);
             }
             crucialItem.isRegistered = true;
             return crucialItem;
@@ -85,26 +87,42 @@ public class CrucialItem {
     protected boolean isHead;
     protected boolean isRegistered;
 
-    public void reload(){
-        if(!isRegistered) {
-            Bukkit.removeRecipe(namespacedKey);
-            if(isHead){
-                namespacedKey = Item.addCustomHeadNSK(id, name, lore, material, crafting);
+    public void register(){
+        try {
+            if(!isRegistered) {
+                if(isHead){
+                    namespacedKey = Item.addCustomHeadNSK(id, name, lore, material, crafting);
+                } else {
+                    namespacedKey = Item.addCustomItemNSK(id, name, lore, material, crafting);
+                }
+                CItem.addCrucialItem(this);
             } else {
-                namespacedKey = Item.addCustomItemNSK(id, name, lore, material, crafting);
+                throw new IllegalArgumentException("Item already registered");
             }
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void reload(){
+        Bukkit.removeRecipe(namespacedKey);
+        if(isHead){
+            namespacedKey = Item.addCustomHeadNSK(id, name, lore, material, crafting);
+        } else {
+            namespacedKey = Item.addCustomItemNSK(id, name, lore, material, crafting);
         }
     }
 
     public void delete(){
         if(isRegistered){
             Bukkit.removeRecipe(namespacedKey);
+            CItem.deleteItem(this);
             isRegistered = false;
         }
     }
 
     public String toCScript(){
-        String cScript = "new Item " + getName().replaceAll(" ", "#space#") + "\n";
+        String cScript = "new Item " + getName().replaceAll(" ", "_") + "\n";
         cScript += "material(" + getName() + ", " + getMaterial() + ")\n";
         cScript += "addLore(" + getName() + ", " + getLoreString() + ")\n";
         cScript += "crafting(" + getName() + ", " + getCraftingString() + ")\n";
@@ -112,7 +130,7 @@ public class CrucialItem {
         return cScript;
     }
 
-    public ItemStack getItem(){
+    public ItemStack get(){
         if(isHead){
             return Stack.setStack(material, name, lore);
         }
@@ -124,7 +142,7 @@ public class CrucialItem {
     }
 
     public void setName(String name) {
-        this.name = name.replaceAll("#space#", " ");
+        this.name = name;
     }
 
     public String getMaterial() {
@@ -178,10 +196,6 @@ public class CrucialItem {
         return isRegistered;
     }
 
-    public void setRegistered(boolean registered) {
-        isRegistered = registered;
-    }
-
     public String getType() {
         return type;
     }
@@ -190,6 +204,10 @@ public class CrucialItem {
         this.type = type;
     }
 
+    /**
+     * Use register()
+     */
+    @Deprecated
     public static Builder builder(){
         return new Builder();
     }
