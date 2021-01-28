@@ -1,4 +1,4 @@
-package de.crucial.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API;
 
 import org.bukkit.Bukkit;
 

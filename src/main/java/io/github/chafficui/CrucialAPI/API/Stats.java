@@ -1,6 +1,6 @@
-package de.crucial.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API;
 
-import de.crucial.CrucialAPI.Utils.StatUtils;
+import io.github.chafficui.CrucialAPI.Utils.StatUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Stats {

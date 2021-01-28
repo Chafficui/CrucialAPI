@@ -1,4 +1,4 @@
-package de.crucial.CrucialAPI.Utils;
+package io.github.chafficui.CrucialAPI.Utils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

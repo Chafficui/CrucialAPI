@@ -1,6 +1,6 @@
-package de.crucial.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API;
 
-import de.crucial.CrucialAPI.Utils.UpdateUtils;
+import io.github.chafficui.CrucialAPI.Utils.UpdateUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;

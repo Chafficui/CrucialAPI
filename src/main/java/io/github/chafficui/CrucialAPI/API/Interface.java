@@ -1,6 +1,6 @@
-package de.crucial.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API;
 
-import de.crucial.CrucialAPI.Utils.TitleUtils;
+import io.github.chafficui.CrucialAPI.Utils.TitleUtils;
 import org.bukkit.entity.Player;
 
 public class Interface {

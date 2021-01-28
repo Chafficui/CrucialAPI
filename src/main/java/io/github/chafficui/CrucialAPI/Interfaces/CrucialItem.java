@@ -1,7 +1,7 @@
-package de.crucial.CrucialAPI.Interfaces;
+package io.github.chafficui.CrucialAPI.Interfaces;
 
-import de.crucial.CrucialAPI.API.Item;
-import de.crucial.CrucialAPI.API.Stack;
+import io.github.chafficui.CrucialAPI.API.Item;
+import io.github.chafficui.CrucialAPI.API.Stack;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

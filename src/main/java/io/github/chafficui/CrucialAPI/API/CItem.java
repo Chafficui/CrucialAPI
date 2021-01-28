@@ -1,7 +1,7 @@
-package de.crucial.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API;
 
-import de.crucial.CrucialAPI.Interfaces.CrucialItem;
-import de.crucial.CrucialAPI.Main;
+import io.github.chafficui.CrucialAPI.Interfaces.CrucialItem;
+import io.github.chafficui.CrucialAPI.Main;
 
 import java.util.ArrayList;
 

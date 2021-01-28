@@ -1,9 +1,9 @@
-package de.crucial.CrucialAPI;
+package io.github.chafficui.CrucialAPI;
 
-import de.crucial.CrucialAPI.API.CItem;
-import de.crucial.CrucialAPI.API.Server;
-import de.crucial.CrucialAPI.API.Stats;
-import de.crucial.CrucialAPI.Interfaces.CrucialItem;
+import io.github.chafficui.CrucialAPI.API.CItem;
+import io.github.chafficui.CrucialAPI.API.Server;
+import io.github.chafficui.CrucialAPI.API.Stats;
+import io.github.chafficui.CrucialAPI.Interfaces.CrucialItem;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,7 +21,7 @@ public class Main extends JavaPlugin {
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                for (CrucialItem cItem:CItem.getRegisteredCrucialItems()) {
+                for (CrucialItem cItem: CItem.getRegisteredCrucialItems()) {
                     cItem.reload();
                 }
             }

@@ -1,6 +1,6 @@
-package de.crucial.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API;
 
-import de.crucial.CrucialAPI.Main;
+import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
