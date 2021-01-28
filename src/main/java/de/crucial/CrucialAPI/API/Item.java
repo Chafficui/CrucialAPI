@@ -42,7 +42,19 @@ public class Item {
 
     public static NamespacedKey addCustomItemNSK(String id, String name, List<String> lore, String material, String[] ingredients){
         try{
+            System.out.println(name);
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
+            return addRecipe(id, name, ingredients, stack);
+        } catch(IllegalArgumentException e) {
+            e.printStackTrace();
+            LOGGER.info("Failed to create " + name);
+            return null;
+        }
+    }
+
+    public static NamespacedKey addCustomHeadNSK(String id, String name, List<String> lore, String head, String[] ingredients){
+        try{
+            ItemStack stack = Stack.setStack(head, name, lore);
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
@@ -76,7 +88,10 @@ public class Item {
     }
 
     private static NamespacedKey addRecipe(String id, String name, String[] ingredients, ItemStack stack) {
+        System.out.println(name);
         name = name.replaceAll(" ", "_");
+        id = id.replaceAll(" ", "_");
+        id = id.replaceAll(":", ".");
         NamespacedKey key = new NamespacedKey(PLUGIN, name + id);
         ShapedRecipe recipe = new ShapedRecipe(key, stack);
         int num = 48;

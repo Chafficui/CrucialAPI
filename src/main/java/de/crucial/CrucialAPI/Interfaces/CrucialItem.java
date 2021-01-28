@@ -1,16 +1,21 @@
 package de.crucial.CrucialAPI.Interfaces;
 
 import de.crucial.CrucialAPI.API.Item;
+import de.crucial.CrucialAPI.API.Stack;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class CrucialItem {
 
-    public static final class Builder {
+    public final static class Builder {
         private static String name = "undefined";
         private static String material = "DIRT";
         private static List<String> lore = new ArrayList<>();
@@ -51,13 +56,20 @@ public class CrucialItem {
 
         public CrucialItem build(){
             CrucialItem crucialItem = new CrucialItem();
-            crucialItem.name = Builder.name;
+            crucialItem.name = Builder.name.replaceAll("#space#", " ");
             crucialItem.material = Builder.material;
             crucialItem.lore = Builder.lore;
             crucialItem.crafting = Builder.crafting;
             crucialItem.type = Builder.type;
             crucialItem.id = crucialItem.name + "." + crucialItem.material + "." + crucialItem.type;
-            crucialItem.namespacedKey = Item.addCustomItemNSK(crucialItem.id, crucialItem.name, crucialItem.lore, crucialItem.material, crucialItem.crafting);
+            String[] m = crucialItem.material.split(":");
+            if(m[0].equals("HEAD")){
+                crucialItem.isHead = true;
+                crucialItem.material = m[1];
+                crucialItem.namespacedKey = Item.addCustomHeadNSK(crucialItem.id, crucialItem.name, crucialItem.lore, crucialItem.material, crucialItem.crafting);
+            } else {
+                crucialItem.namespacedKey = Item.addCustomItemNSK(crucialItem.id, crucialItem.name, crucialItem.lore, crucialItem.material, crucialItem.crafting);
+            }
             crucialItem.isRegistered = true;
             return crucialItem;
         }
@@ -70,12 +82,17 @@ public class CrucialItem {
     protected String id;
     protected String type;
     protected NamespacedKey namespacedKey;
+    protected boolean isHead;
     protected boolean isRegistered;
 
-    private void reload(){
+    public void reload(){
         if(!isRegistered) {
             Bukkit.removeRecipe(namespacedKey);
-            namespacedKey = Item.addCustomItemNSK(id, name, lore, material, crafting);
+            if(isHead){
+                namespacedKey = Item.addCustomHeadNSK(id, name, lore, material, crafting);
+            } else {
+                namespacedKey = Item.addCustomItemNSK(id, name, lore, material, crafting);
+            }
         }
     }
 
@@ -86,13 +103,28 @@ public class CrucialItem {
         }
     }
 
+    public String toCScript(){
+        String cScript = "new Item " + getName().replaceAll(" ", "#space#") + "\n";
+        cScript += "material(" + getName() + ", " + getMaterial() + ")\n";
+        cScript += "addLore(" + getName() + ", " + getLoreString() + ")\n";
+        cScript += "crafting(" + getName() + ", " + getCraftingString() + ")\n";
+        cScript += "type(" + getName() + ", " + getType() + ")\n";
+        return cScript;
+    }
+
+    public ItemStack getItem(){
+        if(isHead){
+            return Stack.setStack(material, name, lore);
+        }
+        return Stack.setStack(Objects.requireNonNull(Material.getMaterial(material)), name, lore);
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
-        reload();
+        this.name = name.replaceAll("#space#", " ");
     }
 
     public String getMaterial() {
@@ -100,26 +132,38 @@ public class CrucialItem {
     }
 
     public void setMaterial(String material) {
-        this.material = material;
-        reload();
+        String[] m = material.split(":");
+        if(m[0].equals("HEAD")) {
+            isHead = true;
+            this.material = m[1];
+        } else {
+            isHead = false;
+            this.material = material;
+        }
     }
 
     public List<String> getLore() {
         return lore;
     }
 
+    public String getLoreString(){
+        return (String.valueOf(getLore()).substring(1).replace("]", ""));
+    }
+
     public void addLore(String text) {
         lore.add(ChatColor.WHITE + text);
-        reload();
     }
 
     public String[] getCrafting() {
         return crafting;
     }
 
+    public String getCraftingString(){
+        return (Arrays.toString(getCrafting()).substring(1).replace("]", ""));
+    }
+
     public void setCrafting(String[] crafting) {
         this.crafting = crafting;
-        reload();
     }
 
     public String getId() {
@@ -144,5 +188,9 @@ public class CrucialItem {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public static Builder builder(){
+        return new Builder();
     }
 }

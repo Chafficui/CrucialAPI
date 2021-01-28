@@ -9,6 +9,7 @@ public class CItem {
     private static Main plugin = Main.getPlugin(Main.class);
 
     public static CrucialItem getCrucialItemByName(String name){
+        name = name.replaceAll(" ", "_");
         for (CrucialItem crucialItem:plugin.getCrucialItems()) {
             if (!name.trim().equals(crucialItem.getName().trim()) || !crucialItem.isRegistered()) {
                 continue;

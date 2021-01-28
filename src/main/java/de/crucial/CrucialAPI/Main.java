@@ -1,10 +1,12 @@
 package de.crucial.CrucialAPI;
 
+import de.crucial.CrucialAPI.API.CItem;
 import de.crucial.CrucialAPI.API.Server;
 import de.crucial.CrucialAPI.API.Stats;
 import de.crucial.CrucialAPI.Interfaces.CrucialItem;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +18,14 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         Server.getLogger("CrucialAPI").info("Enabled");
         Stats.setMetrics(this, 9549);
+        BukkitRunnable runnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (CrucialItem cItem:CItem.getRegisteredCrucialItems()) {
+                    cItem.reload();
+                }
+            }
+        };
     }
 
     @Override
