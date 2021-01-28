@@ -7,11 +7,42 @@
     <groupId>de.chaffic</groupId>
     <artifactId>CrucialAPI</artifactId>
     <version>0.1.4</version>
-    <name>ChafficPlugins</name>
     <packaging>jar</packaging>
-    <properties>
-        <buildNo>1</buildNo>
-    </properties>
+
+    <name>CrucialAPI</name>
+    <organization>
+        <name>ChafficPlugins</name>
+        <url>https://www.spigotmc.org/members/chaffic.308193/#resources</url>
+    </organization>
+    <description>CrucialAPI is an easy-to-use API for spigot developers. It aims to make all features of Spigot even easier to use in a consistent way. In addition, there are numerous other functions far beyond Spigot that can be used easily.</description>
+    <url>https://github.com/Chafficui/CrucialAPI</url>
+
+    <developers>
+        <developer>
+            <name>Chaffic</name>
+            <email>info@crucial-games.com</email>
+            <organization>ChafficPlugins</organization>
+            <url>https://www.spigotmc.org/members/chaffic.308193/#resources</url>
+        </developer>
+        <developer>
+            <name>l2c</name>
+            <organization>ChafficPlugins</organization>
+            <url>https://www.spigotmc.org/members/chaffic.308193/#resources</url>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>CC BY-SA 4.0</name>
+            <url>https://creativecommons.org/licenses/by-sa/4.0/legalcode</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/Chafficui/CrucialAPI.git</connection>
+        <developerConnection>scm:git:ssh://github.com:Chafficui/CrucialAPI.git</developerConnection>
+        <url>http://github.com/Chafficui/CrucialAPI/tree/master</url>
+    </scm>
 
     <build>
         <finalName>${project.artifactId}-v${project.version}</finalName>
