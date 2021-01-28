@@ -6,8 +6,7 @@
 
     <groupId>io.github.chafficui</groupId>
     <artifactId>CrucialAPI</artifactId>
-    <version>0.1.4</version>
-    <packaging>jar</packaging>
+    <version>1.0</version>
 
     <name>CrucialAPI</name>
     <organization>
@@ -21,13 +20,13 @@
         <developer>
             <name>Chaffic</name>
             <email>info@crucial-games.com</email>
+            <url>https://github.com/Chafficui/</url>
             <organization>ChafficPlugins</organization>
-            <url>https://www.spigotmc.org/members/chaffic.308193/#resources</url>
         </developer>
         <developer>
             <name>l2c</name>
+            <url>https://github.com/xl2c/</url>
             <organization>ChafficPlugins</organization>
-            <url>https://www.spigotmc.org/members/chaffic.308193/#resources</url>
         </developer>
     </developers>
 
@@ -43,6 +42,17 @@
         <developerConnection>scm:git:ssh://github.com:Chafficui/CrucialAPI.git</developerConnection>
         <url>http://github.com/Chafficui/CrucialAPI/tree/master</url>
     </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <finalName>${project.artifactId}-v${project.version}</finalName>
@@ -67,8 +77,60 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <packaging>jar</packaging>
 
     <repositories>
         <repository>
@@ -91,4 +153,6 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+
 </project>
