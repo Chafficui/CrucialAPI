@@ -3,6 +3,7 @@ package io.github.chafficui.CrucialAPI.Interfaces;
 import io.github.chafficui.CrucialAPI.API.CItem;
 import io.github.chafficui.CrucialAPI.API.Item;
 import io.github.chafficui.CrucialAPI.API.Stack;
+import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,11 +16,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class CrucialItem {
+    private static Main plugin = Main.getPlugin(Main.class);
 
-    /**
-     * Use register()
-    */
-    @Deprecated
     public final static class Builder {
         private static String name = "undefined";
         private static String material = "DIRT";
@@ -27,8 +25,7 @@ public class CrucialItem {
         private static String[] crafting = {"AIR", "AIR", "AIR",
                 "AIR", "DIAMOND", "AIR",
                 "AIR", "AIR", "AIR"};
-        private static String type = "STANDARD";
-        private static String id = name + "." + material + ".type";
+        private static String type = "ITEM";
 
         private Builder(){
 
@@ -66,13 +63,11 @@ public class CrucialItem {
             crucialItem.lore = Builder.lore;
             crucialItem.crafting = Builder.crafting;
             crucialItem.type = Builder.type;
-            crucialItem.id = crucialItem.name + "." + crucialItem.material + "." + crucialItem.type;
             String[] m = crucialItem.material.split(":");
             if(m[0].equals("HEAD")){
                 crucialItem.isHead = true;
                 crucialItem.material = m[1];
             }
-            crucialItem.isRegistered = true;
             return crucialItem;
         }
     }
@@ -81,60 +76,49 @@ public class CrucialItem {
     protected String material;
     protected List<String> lore;
     protected String[] crafting;
-    protected String id;
     protected String type;
     protected NamespacedKey namespacedKey;
     protected boolean isHead;
     protected boolean isRegistered;
 
     public void register(){
-        try {
-            if(!isRegistered) {
-                if(isHead){
-                    namespacedKey = Item.addCustomHeadNSK(id, name, lore, material, crafting);
-                } else {
-                    namespacedKey = Item.addCustomItemNSK(id, name, lore, material, crafting);
-                }
-                CItem.addCrucialItem(this);
-            } else {
-                throw new IllegalArgumentException("Item already registered");
-            }
-        } catch (IllegalArgumentException e){
-            e.printStackTrace();
+        if(isHead){
+            namespacedKey = Item.addCustomHeadNSK(getId(), name, getFixedLore(), material, crafting);
+        } else {
+            namespacedKey = Item.addCustomItemNSK(getId(), name, getFixedLore(), material, crafting);
         }
+        if(namespacedKey != null){
+            isRegistered = true;
+        } else {
+            CItem.deleteItem(this);
+        }
+    }
+
+    public String getId() {
+        return type.toLowerCase() + ":" + material.toLowerCase() + "." + name.toLowerCase();
     }
 
     public void reload(){
         Bukkit.removeRecipe(namespacedKey);
         if(isHead){
-            namespacedKey = Item.addCustomHeadNSK(id, name, lore, material, crafting);
+            namespacedKey = Item.addCustomHeadNSK(getId(), name, getFixedLore(), material, crafting);
         } else {
-            namespacedKey = Item.addCustomItemNSK(id, name, lore, material, crafting);
+            namespacedKey = Item.addCustomItemNSK(getId(), name, getFixedLore(), material, crafting);
         }
     }
 
     public void delete(){
         if(isRegistered){
-            Bukkit.removeRecipe(namespacedKey);
-            CItem.deleteItem(this);
             isRegistered = false;
+            Bukkit.removeRecipe(namespacedKey);
         }
-    }
-
-    public String toCScript(){
-        String cScript = "new Item " + getName().replaceAll(" ", "_") + "\n";
-        cScript += "material(" + getName() + ", " + getMaterial() + ")\n";
-        cScript += "addLore(" + getName() + ", " + getLoreString() + ")\n";
-        cScript += "crafting(" + getName() + ", " + getCraftingString() + ")\n";
-        cScript += "type(" + getName() + ", " + getType() + ")\n";
-        return cScript;
     }
 
     public ItemStack get(){
         if(isHead){
-            return Stack.setStack(material, name, lore);
+            return Stack.setStack(material, ChatColor.WHITE + name, getFixedLore());
         }
-        return Stack.setStack(Objects.requireNonNull(Material.getMaterial(material)), name, lore);
+        return Stack.setStack(Objects.requireNonNull(Material.getMaterial(material)), ChatColor.WHITE + name, getFixedLore());
     }
 
     public String getName() {
@@ -164,6 +148,51 @@ public class CrucialItem {
         return lore;
     }
 
+    public List<String> getFixedLore() {
+        ArrayList<String> fixedLore = new ArrayList<>(lore);
+        fixedLore.add("");
+        fixedLore.add(ChatColor.DARK_GRAY + "___________________");
+        fixedLore.add(ChatColor.DARK_GRAY + getId());
+        return fixedLore;
+    }
+
+    public static String getKey(ItemStack stack){
+        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
+            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
+        }
+        return null;
+    }
+
+    public static CrucialItem getByKey(String key){
+        for (CrucialItem crucialItem: plugin.getCrucialItems()) {
+            if(key.equals(crucialItem.getId())){
+                return crucialItem;
+            }
+        }
+        return null;
+    }
+
+    public static CrucialItem getByKey(ItemStack stack){
+        for (CrucialItem crucialItem: plugin.getCrucialItems()) {
+            if(getKey(stack) != null && getKey(stack).equals(crucialItem.getId())){
+                return crucialItem;
+            }
+        }
+        return null;
+    }
+
+    public static CrucialItem getRegisteredByKey(String key){
+        for (CrucialItem crucialItem: plugin.getCrucialItems()) {
+            if(key.equals(crucialItem.getId())){
+                if(crucialItem.isRegistered()){
+                    return crucialItem;
+                }
+                return null;
+            }
+        }
+        return null;
+    }
+
     public String getLoreString(){
         return (String.valueOf(getLore()).substring(1).replace("]", ""));
     }
@@ -184,10 +213,6 @@ public class CrucialItem {
         this.crafting = crafting;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public NamespacedKey getNamespacedKey() {
         return namespacedKey;
     }
@@ -204,9 +229,6 @@ public class CrucialItem {
         this.type = type;
     }
 
-    /**
-     * Use register()
-     */
     @Deprecated
     public static Builder builder(){
         return new Builder();

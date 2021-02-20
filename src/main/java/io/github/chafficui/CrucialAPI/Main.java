@@ -18,14 +18,6 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         getLogger().info("Enabled");
         Stats.setMetrics(this, 9549);
-        BukkitRunnable runnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (CrucialItem cItem: CItem.getRegisteredCrucialItems()) {
-                    cItem.register();
-                }
-            }
-        };
     }
 
     @Override

@@ -42,7 +42,6 @@ public class Item {
 
     public static NamespacedKey addCustomItemNSK(String id, String name, List<String> lore, String material, String[] ingredients){
         try{
-            System.out.println(name);
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
@@ -88,7 +87,6 @@ public class Item {
     }
 
     private static NamespacedKey addRecipe(String id, String name, String[] ingredients, ItemStack stack) {
-        System.out.println(name);
         name = name.replaceAll(" ", "_");
         id = id.replaceAll(" ", "_");
         id = id.replaceAll(":", ".");
