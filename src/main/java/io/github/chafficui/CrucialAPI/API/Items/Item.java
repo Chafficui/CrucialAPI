@@ -1,5 +1,6 @@
-package io.github.chafficui.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API.Items;
 
+import io.github.chafficui.CrucialAPI.API.Server;
 import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

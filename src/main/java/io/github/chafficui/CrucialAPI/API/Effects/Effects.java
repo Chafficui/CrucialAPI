@@ -1,4 +1,4 @@
-package io.github.chafficui.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API.Effects;
 
 import io.github.chafficui.CrucialAPI.Main;
 import io.github.chafficui.CrucialAPI.Utils.BorderUtils;
@@ -32,14 +32,17 @@ public class Effects {
         }
     }
 
+    @Deprecated
     public static void showParticles(Player player, Particle type){
         player.getWorld().spawnParticle(type, player.getEyeLocation(), 50);
     }
 
+    @Deprecated
     public static void showParticles(Player player, Particle type, int amount){
         player.getWorld().spawnParticle(type, player.getEyeLocation(), amount);
     }
 
+    @Deprecated
     public static void showParticles(Player player, Particle type, int amount, int seconds){
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             for (int i = 0; i < seconds*5; i++){
@@ -53,14 +56,17 @@ public class Effects {
         });
     }
 
+    @Deprecated
     public static void showParticles(Location location, Particle type){
         location.getWorld().spawnParticle(type, location, 50);
     }
 
+    @Deprecated
     public static void showParticles(Location location, Particle type, int amount){
         location.getWorld().spawnParticle(type, location, amount);
     }
 
+    @Deprecated
     public static void showParticles(Location location, Particle type, int amount, int seconds){
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             for (int i = 0; i < seconds*5; i++){

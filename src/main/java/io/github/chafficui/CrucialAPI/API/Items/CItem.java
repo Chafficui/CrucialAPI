@@ -1,6 +1,5 @@
-package io.github.chafficui.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.API.Items;
 
-import io.github.chafficui.CrucialAPI.Interfaces.CrucialItem;
 import io.github.chafficui.CrucialAPI.Main;
 
 import java.util.ArrayList;

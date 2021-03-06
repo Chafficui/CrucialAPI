@@ -1,8 +1,5 @@
-package io.github.chafficui.CrucialAPI.Interfaces;
+package io.github.chafficui.CrucialAPI.API.Items;
 
-import io.github.chafficui.CrucialAPI.API.CItem;
-import io.github.chafficui.CrucialAPI.API.Item;
-import io.github.chafficui.CrucialAPI.API.Stack;
 import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -74,7 +71,7 @@ public class CrucialItem {
 
     protected String name;
     protected String material;
-    protected List<String> lore;
+    protected List<String> lore = new ArrayList<>();
     protected String[] crafting;
     protected String type;
     protected NamespacedKey namespacedKey;

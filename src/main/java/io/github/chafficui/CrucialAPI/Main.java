@@ -1,12 +1,9 @@
 package io.github.chafficui.CrucialAPI;
 
-import io.github.chafficui.CrucialAPI.API.CItem;
-import io.github.chafficui.CrucialAPI.API.Server;
 import io.github.chafficui.CrucialAPI.API.Stats;
-import io.github.chafficui.CrucialAPI.Interfaces.CrucialItem;
+import io.github.chafficui.CrucialAPI.API.Items.CrucialItem;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.ArrayList;
