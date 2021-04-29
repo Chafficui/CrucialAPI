@@ -159,8 +159,8 @@ public class CrucialItem {
         }
     }
 
-    public boolean isRegistered() {
-        return isRegistered;
+    public String getId() {
+        return type.toLowerCase() + ":" + material.toLowerCase() + "." + name.toLowerCase();
     }
 
     public void reload(){
@@ -173,9 +173,10 @@ public class CrucialItem {
     }
 
     public void delete(){
-        isRegistered = false;
-        Bukkit.removeRecipe(namespacedKey);
-        getCrucialItems().remove(this);
+        if(isRegistered){
+            isRegistered = false;
+            Bukkit.removeRecipe(namespacedKey);
+        }
     }
 
     public ItemStack get(){
@@ -189,10 +190,6 @@ public class CrucialItem {
         return name;
     }
 
-    @Deprecated
-    /**
-     * @deprecated Since v1.2
-     */
     public void setName(String name) {
         this.name = name;
     }
@@ -201,10 +198,6 @@ public class CrucialItem {
         return material;
     }
 
-    @Deprecated
-    /**
-     * @deprecated Since v1.2
-     */
     public void setMaterial(String material) {
         String[] m = material.split(":");
         if(m[0].equals("HEAD")) {
@@ -228,52 +221,11 @@ public class CrucialItem {
         return fixedLore;
     }
 
-    public String getLoreString(){
-        return (String.valueOf(getLore()).substring(1).replace("]", ""));
-    }
-
-    public void setLore(List<String> lore){
-        this.lore = lore;
-    }
-
-    public void addLore(String text) {
-        lore.add(ChatColor.WHITE + text);
-    }
-
-    public String[] getCrafting() {
-        return crafting;
-    }
-
-    public String getCraftingString(){
-        return (Arrays.toString(getCrafting()).substring(1).replace("]", ""));
-    }
-
-    public void setCrafting(String[] crafting) {
-        this.crafting = crafting;
-    }
-
-    public NamespacedKey getNamespacedKey() {
-        return namespacedKey;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    @Deprecated
-    /**
-     * @deprecated Since v1.2
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @Deprecated
-    /**
-     * @deprecated Since v1.2
-     */
-    public static Builder builder(){
-        return new Builder();
+    public static String getKey(ItemStack stack){
+        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
+            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
+        }
+        return null;
     }
 
     public static CrucialItem getByKey(String key){
@@ -306,35 +258,44 @@ public class CrucialItem {
         return null;
     }
 
-    public static ArrayList<CrucialItem> getRegisteredCrucialItems(){
-        ArrayList<CrucialItem> registered = new ArrayList<>();
-        for (CrucialItem cItem: plugin.getCrucialItems()) {
-            if(cItem.isRegistered()){
-                registered.add(cItem);
-            }
-        }
-        return registered;
+    public String getLoreString(){
+        return (String.valueOf(getLore()).substring(1).replace("]", ""));
     }
 
-    public static ArrayList<CrucialItem> getCrucialItems(){
-        return plugin.getCrucialItems();
+    public void addLore(String text) {
+        lore.add(ChatColor.WHITE + text);
+    }
+
+    public String[] getCrafting() {
+        return crafting;
+    }
+
+    public String getCraftingString(){
+        return (Arrays.toString(getCrafting()).substring(1).replace("]", ""));
+    }
+
+    public void setCrafting(String[] crafting) {
+        this.crafting = crafting;
+    }
+
+    public NamespacedKey getNamespacedKey() {
+        return namespacedKey;
+    }
+
+    public boolean isRegistered() {
+        return isRegistered;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Deprecated
-    /**
-     * @deprecated Since v1.2 | renamed to getKeyByItemStack(ItemStack stack)
-     */
-    public static String getKey(ItemStack stack){
-        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
-        }
-        return null;
-    }
-
-    public static String getKeyByItemStack(ItemStack stack){
-        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
-        }
-        return null;
+    public static Builder builder(){
+        return new Builder();
     }
 }

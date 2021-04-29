@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class ReflectionUtils {
+public class PackageUtils {
 
     private static HashMap<Class<? extends Entity>, Method> handles = new HashMap<Class<? extends Entity>, Method>();
     private static Field player_connection = null;
@@ -60,14 +60,14 @@ public class ReflectionUtils {
     public static void sendPacket(Player p, Object packet) throws IllegalArgumentException {
         try {
             if (player_connection == null){
-                player_connection = Objects.requireNonNull(ReflectionUtils.getHandle(p)).getClass().getField("playerConnection");
-                for (Method m : player_connection.get(ReflectionUtils.getHandle(p)).getClass().getMethods()){
+                player_connection = Objects.requireNonNull(PackageUtils.getHandle(p)).getClass().getField("playerConnection");
+                for (Method m : player_connection.get(PackageUtils.getHandle(p)).getClass().getMethods()){
                     if (m.getName().equalsIgnoreCase("sendPacket")){
                         player_sendPacket = m;
                     }
                 }
             }
-            player_sendPacket.invoke(player_connection.get(ReflectionUtils.getHandle(p)), packet);
+            player_sendPacket.invoke(player_connection.get(PackageUtils.getHandle(p)), packet);
         }
         catch (IllegalAccessException | NoSuchFieldException | InvocationTargetException ex){
             ex.printStackTrace();
