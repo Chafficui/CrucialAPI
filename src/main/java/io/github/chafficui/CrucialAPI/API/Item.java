@@ -9,12 +9,10 @@ import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class Item {
 
     private static final Main PLUGIN = Main.getPlugin(Main.class);
-    private static final Logger LOGGER = Server.getLogger("CrucialAPI");
 
     public static boolean addCustomItem(String id, String name, List<String> lore, String material, String[] ingredients){
         try{
@@ -23,7 +21,7 @@ public class Item {
             return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
-            LOGGER.info("Failed to create " + name);
+            PLUGIN.getLogger().info("Failed to create " + name);
             return false;
         }
     }
@@ -35,7 +33,7 @@ public class Item {
             return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
-            LOGGER.info("Failed to create " + name);
+            PLUGIN.getLogger().info("Failed to create " + name);
             return false;
         }
     }
@@ -46,7 +44,7 @@ public class Item {
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
-            LOGGER.info("Failed to create " + name);
+            PLUGIN.getLogger().info("Failed to create " + name);
             return null;
         }
     }
@@ -57,7 +55,7 @@ public class Item {
             return addRecipe(id, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
-            LOGGER.info("Failed to create " + name);
+            PLUGIN.getLogger().info("Failed to create " + name);
             return null;
         }
     }
@@ -69,7 +67,7 @@ public class Item {
             return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
-            LOGGER.info("Failed to create " + name);
+            PLUGIN.getLogger().info("Failed to create " + name);
             return false;
         }
     }
@@ -81,7 +79,7 @@ public class Item {
             return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
-            LOGGER.info("Failed to create " + name);
+            PLUGIN.getLogger().info("Failed to create " + name);
             return false;
         }
     }
@@ -103,7 +101,7 @@ public class Item {
         }
 
         Bukkit.addRecipe(recipe);
-        LOGGER.info("Successfully created " + name + " (key: " + name+id + ")");
+        PLUGIN.getLogger().info("Successfully created " + name + " (key: " + name+id + ")");
         return key;
     }
 }

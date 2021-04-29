@@ -7,20 +7,34 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 public class Effects {
 
     private static final Main plugin = Main.getPlugin(Main.class);
     private static final BorderUtils functions = new BorderUtils(plugin);
 
+    /**
+     * @param player a player to receive the blood effect.
+     * @param percentage strength of the blood effect.
+     */
     public static void setBlood(Player player, int percentage){
         functions.setBorder(player, 100 - percentage);
     }
 
+    /**
+     * @bug does not work now and then.
+     * @param player a player whose screen is to be cleaned of blood.
+     */
     public static void removeBlood(Player player){
-        functions.setBorder(player, 0);
         functions.removeBorder(player);
     }
 
+    /**
+     * @param player a player to receive the blood effect.
+     * @param percentage strength of the blood effect.
+     * @param seconds how long the player should receive the blood effect..
+     */
     public static void setBlood(Player player, int percentage, float seconds){
         if(seconds > 0){
             setBlood(player, percentage);
@@ -32,14 +46,29 @@ public class Effects {
         }
     }
 
+    /**
+     * @param player a player to receive particle effects.
+     * @param type the type of particles.
+     */
     public static void showParticles(Player player, Particle type){
         player.getWorld().spawnParticle(type, player.getEyeLocation(), 50);
     }
 
+    /**
+     * @param player a player to receive particle effects.
+     * @param type the type of particles.
+     * @param amount the amount of particles.
+     */
     public static void showParticles(Player player, Particle type, int amount){
         player.getWorld().spawnParticle(type, player.getEyeLocation(), amount);
     }
 
+    /**
+     * @param player a player to receive particle effects.
+     * @param type the type of particles.
+     * @param amount the amount of particles.
+     * @param seconds the time particles should be spawned.
+     */
     public static void showParticles(Player player, Particle type, int amount, int seconds){
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             for (int i = 0; i < seconds*5; i++){
@@ -53,14 +82,29 @@ public class Effects {
         });
     }
 
+    /**
+     * @param location a location to spawn particle effects.
+     * @param type the type of particles.
+     */
     public static void showParticles(Location location, Particle type){
-        location.getWorld().spawnParticle(type, location, 50);
+        Objects.requireNonNull(location.getWorld()).spawnParticle(type, location, 50);
     }
 
+    /**
+     * @param location a location to spawn particle effects.
+     * @param type the type of particles.
+     * @param amount the amount of particles.
+     */
     public static void showParticles(Location location, Particle type, int amount){
-        location.getWorld().spawnParticle(type, location, amount);
+        Objects.requireNonNull(location.getWorld()).spawnParticle(type, location, amount);
     }
 
+    /**
+     * @param location a location to spawn particle effects.
+     * @param type the type of particles.
+     * @param amount the amount of particles.
+     * @param seconds the time particles should be spawned.
+     */
     public static void showParticles(Location location, Particle type, int amount, int seconds){
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             for (int i = 0; i < seconds*5; i++){

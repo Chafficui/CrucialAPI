@@ -1,4 +1,4 @@
-package io.github.chafficui.CrucialAPI.API;
+package io.github.chafficui.CrucialAPI.io;
 
 import com.google.gson.Gson;
 
@@ -8,10 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-/**
- * @deprecated {will be removed in next version} moved to {@link io.github.chafficui.CrucialAPI.io.Json}.
- */
-@Deprecated
 public class Json {
     static Gson g = new Gson();
 

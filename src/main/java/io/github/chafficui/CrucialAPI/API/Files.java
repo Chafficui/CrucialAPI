@@ -8,11 +8,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+/**
+ * @deprecated {will be removed in next version} use {@link Json} instead.
+ */
+@Deprecated
 public class Files {
 
     private static final Main plugin = Main.getPlugin(Main.class);
     private static final Logger logger = Server.getLogger("CrucialAPI");
 
+    /**
+     * @deprecated {will be removed in next version} use {@link Json} instead.
+     */
+    @Deprecated
     public static YamlConfiguration setupYaml(File dataFolder, String path, String name){
         if(!dataFolder.exists()){
             dataFolder.mkdir();
@@ -36,6 +44,10 @@ public class Files {
         return YamlConfiguration.loadConfiguration(file);
     }
 
+    /**
+     * @deprecated {will be removed in next version} use {@link Json} instead.
+     */
+    @Deprecated
     public static YamlConfiguration setupYaml(File dataFolder, String name){
         if(!dataFolder.exists()){
             dataFolder.mkdir();
@@ -56,8 +68,7 @@ public class Files {
     }
 
     /**
-     * Will be replaced very soon
-     * Don't use
+     * @deprecated {will be removed in next version} use {@link Json} instead.
      */
     @Deprecated
     public static void saveYaml(FileConfiguration file, File dataFolder, String path){

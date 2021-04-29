@@ -1,6 +1,5 @@
 package io.github.chafficui.CrucialAPI;
 
-import io.github.chafficui.CrucialAPI.API.Server;
 import io.github.chafficui.CrucialAPI.API.Updater;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,12 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.logging.Logger;
 
 public class Crucial {
 
     private static final Main PLUGIN = Main.getPlugin(Main.class);
-    private static final Logger LOGGER = Server.getLogger("CrucialAPI");
 
     public static void getUpdate(){
         Updater.update(PLUGIN, 86380, PLUGIN.getFileH());
@@ -30,7 +27,7 @@ public class Crucial {
                 FileOutputStream fos = new FileOutputStream("plugins/CrucialAPI.jar");
                 fos.getChannel().transferFrom(rbc, 0L, Long.MAX_VALUE);
             } catch (IOException e) {
-                LOGGER.severe("Error 28: Failed to update CrucialAPI");
+                PLUGIN.getLogger().severe("Error 28: Failed to update CrucialAPI");
             }
             Bukkit.getPluginManager().disablePlugin(plugin);
             Bukkit.getPluginManager().disablePlugin(PLUGIN);

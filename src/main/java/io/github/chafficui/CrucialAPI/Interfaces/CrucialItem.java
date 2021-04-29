@@ -16,8 +16,43 @@ import java.util.List;
 import java.util.Objects;
 
 public class CrucialItem {
-    private static Main plugin = Main.getPlugin(Main.class);
+    private static final Main plugin = Main.getPlugin(Main.class);
 
+    public CrucialItem(String name, String head, String type){
+        try {
+            this.name = name;
+            this.type = type;
+            this.isHead = true;
+            this.material = head;
+            plugin.getCrucialItems().add(this);
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    public CrucialItem(String name, Material material, String type){
+        try {
+            this.name = name;
+            this.type = type;
+            this.material = material.name();
+            plugin.getCrucialItems().add(this);
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @deprecated Since v1.2
+     */
+    @Deprecated
+    public CrucialItem(){
+
+    }
+
+    /**
+     * @deprecated Since v1.2
+     */
+    @Deprecated
     public final static class Builder {
         private static String name = "undefined";
         private static String material = "DIRT";
@@ -72,14 +107,44 @@ public class CrucialItem {
         }
     }
 
-    protected String name;
-    protected String material;
-    protected List<String> lore;
-    protected String[] crafting;
-    protected String type;
-    protected NamespacedKey namespacedKey;
-    protected boolean isHead;
-    protected boolean isRegistered;
+    private String name;
+    private String material;
+    private List<String> lore;
+    private String[] crafting;
+    private String type;
+    private NamespacedKey namespacedKey;
+    private boolean isHead;
+    private boolean isRegistered;
+    private boolean isUsable;
+    private boolean isAllowedForCrafting;
+
+    public boolean isAllowedForCrafting() {
+        return isAllowedForCrafting;
+    }
+
+    public void setAllowedForCrafting(boolean allowedForCrafting) {
+        isAllowedForCrafting = allowedForCrafting;
+    }
+
+    public boolean isUsable() {
+        return isUsable;
+    }
+
+    public void setUsable(boolean usable) {
+        isUsable = usable;
+    }
+
+    /**
+     * @deprecated Since v1.2 | renamed to getKey(ItemStack stack)
+     */
+    @Deprecated
+    public String getId() {
+        return type.toLowerCase() + ":" + material.toLowerCase() + "." + name.toLowerCase();
+    }
+
+    public String getKey() {
+        return type.toLowerCase() + ":" + material.toLowerCase() + "." + name.toLowerCase();
+    }
 
     public void register(){
         if(isHead){
@@ -94,8 +159,8 @@ public class CrucialItem {
         }
     }
 
-    public String getId() {
-        return type.toLowerCase() + ":" + material.toLowerCase() + "." + name.toLowerCase();
+    public boolean isRegistered() {
+        return isRegistered;
     }
 
     public void reload(){
@@ -108,10 +173,9 @@ public class CrucialItem {
     }
 
     public void delete(){
-        if(isRegistered){
-            isRegistered = false;
-            Bukkit.removeRecipe(namespacedKey);
-        }
+        isRegistered = false;
+        Bukkit.removeRecipe(namespacedKey);
+        getCrucialItems().remove(this);
     }
 
     public ItemStack get(){
@@ -125,6 +189,10 @@ public class CrucialItem {
         return name;
     }
 
+    @Deprecated
+    /**
+     * @deprecated Since v1.2
+     */
     public void setName(String name) {
         this.name = name;
     }
@@ -133,6 +201,10 @@ public class CrucialItem {
         return material;
     }
 
+    @Deprecated
+    /**
+     * @deprecated Since v1.2
+     */
     public void setMaterial(String material) {
         String[] m = material.split(":");
         if(m[0].equals("HEAD")) {
@@ -156,11 +228,52 @@ public class CrucialItem {
         return fixedLore;
     }
 
-    public static String getKey(ItemStack stack){
-        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
-        }
-        return null;
+    public String getLoreString(){
+        return (String.valueOf(getLore()).substring(1).replace("]", ""));
+    }
+
+    public void setLore(List<String> lore){
+        this.lore = lore;
+    }
+
+    public void addLore(String text) {
+        lore.add(ChatColor.WHITE + text);
+    }
+
+    public String[] getCrafting() {
+        return crafting;
+    }
+
+    public String getCraftingString(){
+        return (Arrays.toString(getCrafting()).substring(1).replace("]", ""));
+    }
+
+    public void setCrafting(String[] crafting) {
+        this.crafting = crafting;
+    }
+
+    public NamespacedKey getNamespacedKey() {
+        return namespacedKey;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    @Deprecated
+    /**
+     * @deprecated Since v1.2
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Deprecated
+    /**
+     * @deprecated Since v1.2
+     */
+    public static Builder builder(){
+        return new Builder();
     }
 
     public static CrucialItem getByKey(String key){
@@ -193,44 +306,35 @@ public class CrucialItem {
         return null;
     }
 
-    public String getLoreString(){
-        return (String.valueOf(getLore()).substring(1).replace("]", ""));
+    public static ArrayList<CrucialItem> getRegisteredCrucialItems(){
+        ArrayList<CrucialItem> registered = new ArrayList<>();
+        for (CrucialItem cItem: plugin.getCrucialItems()) {
+            if(cItem.isRegistered()){
+                registered.add(cItem);
+            }
+        }
+        return registered;
     }
 
-    public void addLore(String text) {
-        lore.add(ChatColor.WHITE + text);
-    }
-
-    public String[] getCrafting() {
-        return crafting;
-    }
-
-    public String getCraftingString(){
-        return (Arrays.toString(getCrafting()).substring(1).replace("]", ""));
-    }
-
-    public void setCrafting(String[] crafting) {
-        this.crafting = crafting;
-    }
-
-    public NamespacedKey getNamespacedKey() {
-        return namespacedKey;
-    }
-
-    public boolean isRegistered() {
-        return isRegistered;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public static ArrayList<CrucialItem> getCrucialItems(){
+        return plugin.getCrucialItems();
     }
 
     @Deprecated
-    public static Builder builder(){
-        return new Builder();
+    /**
+     * @deprecated Since v1.2 | renamed to getKeyByItemStack(ItemStack stack)
+     */
+    public static String getKey(ItemStack stack){
+        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
+            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
+        }
+        return null;
+    }
+
+    public static String getKeyByItemStack(ItemStack stack){
+        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
+            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
+        }
+        return null;
     }
 }
