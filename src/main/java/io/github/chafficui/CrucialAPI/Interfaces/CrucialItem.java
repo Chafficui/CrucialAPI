@@ -1,6 +1,5 @@
 package io.github.chafficui.CrucialAPI.Interfaces;
 
-import io.github.chafficui.CrucialAPI.API.CItem;
 import io.github.chafficui.CrucialAPI.API.Item;
 import io.github.chafficui.CrucialAPI.API.Stack;
 import io.github.chafficui.CrucialAPI.Main;
@@ -155,12 +154,8 @@ public class CrucialItem {
         if(namespacedKey != null){
             isRegistered = true;
         } else {
-            CItem.deleteItem(this);
+            this.delete();
         }
-    }
-
-    public String getId() {
-        return type.toLowerCase() + ":" + material.toLowerCase() + "." + name.toLowerCase();
     }
 
     public void reload(){

@@ -1,4 +1,4 @@
-package io.github.chafficui.CrucialAPI.API.Items;
+package io.github.chafficui.CrucialAPI.API;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
