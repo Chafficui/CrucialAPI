@@ -23,7 +23,6 @@ public class CrucialItem {
             this.type = type;
             this.isHead = true;
             this.material = head;
-            plugin.getCrucialItems().add(this);
         } catch (NullPointerException e){
             e.printStackTrace();
         }
@@ -34,7 +33,6 @@ public class CrucialItem {
             this.name = name;
             this.type = type;
             this.material = material.name();
-            plugin.getCrucialItems().add(this);
         } catch (NullPointerException e){
             e.printStackTrace();
         }
@@ -146,15 +144,18 @@ public class CrucialItem {
     }
 
     public void register(){
-        if(isHead){
-            namespacedKey = Item.addCustomHeadNSK(getId(), name, getFixedLore(), material, crafting);
-        } else {
-            namespacedKey = Item.addCustomItemNSK(getId(), name, getFixedLore(), material, crafting);
-        }
-        if(namespacedKey != null){
-            isRegistered = true;
-        } else {
-            this.delete();
+        if(!isRegistered){
+            if(isHead){
+                namespacedKey = Item.addCustomHeadNSK(getId(), name, getFixedLore(), material, crafting);
+            } else {
+                namespacedKey = Item.addCustomItemNSK(getId(), name, getFixedLore(), material, crafting);
+            }
+            if(namespacedKey != null){
+                plugin.getCrucialItems().add(this);
+                isRegistered = true;
+            } else {
+                this.delete();
+            }
         }
     }
 
@@ -193,15 +194,14 @@ public class CrucialItem {
         return material;
     }
 
-    public void setMaterial(String material) {
-        String[] m = material.split(":");
-        if(m[0].equals("HEAD")) {
-            isHead = true;
-            this.material = m[1];
-        } else {
-            isHead = false;
-            this.material = material;
-        }
+    public void setMaterial(String head) {
+        isHead = true;
+        material = head;
+    }
+
+    public void setMaterial(Material material){
+        isHead = false;
+        this.material = material.name();
     }
 
     public List<String> getLore() {

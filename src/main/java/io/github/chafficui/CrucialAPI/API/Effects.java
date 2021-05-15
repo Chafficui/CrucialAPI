@@ -23,7 +23,6 @@ public class Effects {
     }
 
     /**
-     * @bug does not work now and then.
      * @param player a player whose screen is to be cleaned of blood.
      */
     public static void removeBlood(Player player){
