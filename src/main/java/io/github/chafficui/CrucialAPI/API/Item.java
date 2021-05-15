@@ -14,10 +14,10 @@ public class Item {
 
     private static final Main PLUGIN = Main.getPlugin(Main.class);
 
-    public static boolean addCustomItem(String id, String name, List<String> lore, String material, String[] ingredients){
+    public static boolean addCustomItem(String key, String name, List<String> lore, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
-            addRecipe(id, name, ingredients, stack);
+            addRecipe(key, name, ingredients, stack);
             return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
@@ -26,10 +26,10 @@ public class Item {
         }
     }
 
-    public static boolean addCustomItem(String id, ItemStack stack, String[] ingredients){
+    public static boolean addCustomItem(String key, ItemStack stack, String[] ingredients){
         String name = Objects.requireNonNull(stack.getItemMeta()).getDisplayName();
         try{
-            addRecipe(id, name, ingredients, stack);
+            addRecipe(key, name, ingredients, stack);
             return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
@@ -38,10 +38,10 @@ public class Item {
         }
     }
 
-    public static NamespacedKey addCustomItemNSK(String id, String name, List<String> lore, String material, String[] ingredients){
+    public static NamespacedKey addCustomItemNSK(String key, String name, List<String> lore, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name, lore);
-            return addRecipe(id, name, ingredients, stack);
+            return addRecipe(key, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
             PLUGIN.getLogger().info("Failed to create " + name);
@@ -49,10 +49,10 @@ public class Item {
         }
     }
 
-    public static NamespacedKey addCustomHeadNSK(String id, String name, List<String> lore, String head, String[] ingredients){
+    public static NamespacedKey addCustomHeadNSK(String key, String name, List<String> lore, String head, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(head, name, lore);
-            return addRecipe(id, name, ingredients, stack);
+            return addRecipe(key, name, ingredients, stack);
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
             PLUGIN.getLogger().info("Failed to create " + name);
@@ -60,10 +60,10 @@ public class Item {
         }
     }
 
-    public static boolean addCustomItem(String id, String name, String material, String[] ingredients){
+    public static boolean addCustomItem(String key, String name, String material, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(Material.getMaterial(material), name);
-            addRecipe(id, name, ingredients, stack);
+            addRecipe(key, name, ingredients, stack);
             return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
@@ -72,10 +72,10 @@ public class Item {
         }
     }
 
-    public static boolean addCustomHead(String id, String name, List<String> lore, String head, String[] ingredients){
+    public static boolean addCustomHead(String key, String name, List<String> lore, String head, String[] ingredients){
         try{
             ItemStack stack = Stack.setStack(head, name, lore);
-            addRecipe(id, name, ingredients, stack);
+            addRecipe(key, name, ingredients, stack);
             return true;
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
@@ -84,12 +84,12 @@ public class Item {
         }
     }
 
-    private static NamespacedKey addRecipe(String id, String name, String[] ingredients, ItemStack stack) {
+    private static NamespacedKey addRecipe(String key, String name, String[] ingredients, ItemStack stack) {
         name = name.replaceAll(" ", "_");
-        id = id.replaceAll(" ", "_");
-        id = id.replaceAll(":", ".");
-        NamespacedKey key = new NamespacedKey(PLUGIN, name + id);
-        ShapedRecipe recipe = new ShapedRecipe(key, stack);
+        key = key.replaceAll(" ", "_");
+        key = key.replaceAll(":", ".");
+        NamespacedKey namespacedKey = new NamespacedKey(PLUGIN, name + key);
+        ShapedRecipe recipe = new ShapedRecipe(namespacedKey, stack);
         int num = 48;
 
         recipe.shape("123","456","789");
@@ -101,7 +101,7 @@ public class Item {
         }
 
         Bukkit.addRecipe(recipe);
-        PLUGIN.getLogger().info("Successfully created " + name + " (key: " + name+id + ")");
-        return key;
+        PLUGIN.getLogger().info("Successfully created " + name + " (key: " + name+key + ")");
+        return namespacedKey;
     }
 }
