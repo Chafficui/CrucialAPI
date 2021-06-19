@@ -53,8 +53,7 @@ public class BorderUtils {
                     break;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignore) {
         }
     }
 
@@ -69,12 +68,16 @@ public class BorderUtils {
         this.plugin = plugin;
     }
     public void removeBorder(Player p) {
-        sendWorldBorderPacket(p, 0, 200000D, 200000D, 0);
+        if(!Bukkit.getVersion().contains("1.17")){
+            sendWorldBorderPacket(p, 0, 200000D, 200000D, 0);
+        }
     }
 
     public void setBorder(Player p, int percentage){
-        int dist = -10000 * percentage + 1300000;
-        sendWorldBorderPacket(p, dist, 200000D, 200000D, 0);
+        if(!Bukkit.getVersion().contains("1.17")){
+            int dist = -10000 * percentage + 1300000;
+            sendWorldBorderPacket(p, dist, 200000D, 200000D, 0);
+        }
     }
 
     public void sendWorldBorderPacket(Player p, int dist, double oldradius, double newradius, long delay) {

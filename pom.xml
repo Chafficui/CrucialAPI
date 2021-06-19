@@ -6,7 +6,7 @@
 
     <groupId>io.github.chafficui</groupId>
     <artifactId>CrucialAPI</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
 
     <name>CrucialAPI</name>
     <organization>
@@ -32,15 +32,15 @@
 
     <licenses>
         <license>
-            <name>CC BY-SA 4.0</name>
-            <url>https://creativecommons.org/licenses/by-sa/4.0/legalcode</url>
+            <name>GNU General Public License v3.0</name>
+            <url>https://github.com/Chafficui/MyTrip/blob/master/LICENSE</url>
         </license>
     </licenses>
 
     <scm>
         <connection>scm:git:git://github.com/Chafficui/CrucialAPI.git</connection>
         <developerConnection>scm:git:ssh://github.com:Chafficui/CrucialAPI.git</developerConnection>
-        <url>http://github.com/Chafficui/CrucialAPI/tree/master</url>
+        <url>https://github.com/Chafficui/CrucialAPI/tree/master</url>
     </scm>
 
     <distributionManagement>
@@ -77,6 +77,63 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <detectJavaApiLink>false</detectJavaApiLink>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <!-->
         </plugins>
     </build>
     <packaging>jar</packaging>

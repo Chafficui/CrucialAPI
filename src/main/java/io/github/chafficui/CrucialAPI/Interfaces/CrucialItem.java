@@ -106,7 +106,7 @@ public class CrucialItem {
 
     private String name;
     private String material;
-    private List<String> lore;
+    private List<String> lore = new ArrayList<>();
     private String[] crafting;
     private String type;
     private NamespacedKey namespacedKey;
@@ -151,7 +151,6 @@ public class CrucialItem {
                 namespacedKey = Item.addCustomItemNSK(getId(), name, getFixedLore(), material, crafting);
             }
             if(namespacedKey != null){
-                plugin.getCrucialItems().add(this);
                 isRegistered = true;
             } else {
                 this.delete();
@@ -251,6 +250,10 @@ public class CrucialItem {
             }
         }
         return null;
+    }
+
+    public static ArrayList<CrucialItem> getCrucialItems(){
+        return plugin.getCrucialItems();
     }
 
     public String getLoreString(){

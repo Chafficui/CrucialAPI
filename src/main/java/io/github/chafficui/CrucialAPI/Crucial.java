@@ -20,7 +20,6 @@ public class Crucial {
 
     public static void getVersion(String version, JavaPlugin plugin){
         if(!version.equals(PLUGIN.getDescription().getVersion())) {
-            System.out.println(PLUGIN.getDescription().getVersion() + " oder " + version);
             try {
                 URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
                 ReadableByteChannel rbc = Channels.newChannel(website.openStream());
