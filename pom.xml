@@ -59,7 +59,7 @@
     </properties>
 
     <build>
-        <finalName>${project.artifactId}-v${project.version}</finalName>
+        <finalName>${name}-v${project.version}</finalName>
         <resources>
             <resource>
                 <targetPath>.</targetPath>

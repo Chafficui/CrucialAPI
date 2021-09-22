@@ -2,7 +2,6 @@ package io.github.chafficui.crucialAPI;
 
 import io.github.chafficui.crucialAPI.exceptions.CrucialException;
 import io.github.chafficui.crucialAPI.utils.Stats;
-import io.github.chafficui.crucialAPI.utils.api.Updater;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
