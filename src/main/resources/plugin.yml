@@ -2,5 +2,5 @@ name: ${name}
 version: ${project.version}
 author:  ${project.organization.name}
 prefix: CrucialAPI
-main: io.github.chafficui.crucialAPI.Main
+main: io.github.chafficui.CrucialAPI.Main
 api-version: 1.13

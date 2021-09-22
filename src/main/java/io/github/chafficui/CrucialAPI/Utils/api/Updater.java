@@ -1,11 +1,11 @@
-package io.github.chafficui.crucialAPI.utils.api;
+package io.github.chafficui.CrucialAPI.Utils.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.github.chafficui.crucialAPI.exceptions.CrucialException;
-import io.github.chafficui.crucialAPI.utils.Server;
+import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
+import io.github.chafficui.CrucialAPI.Utils.Server;
 import org.bukkit.plugin.Plugin;
 
 import java.io.*;

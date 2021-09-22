@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.chafficui</groupId>
-    <artifactId>crucialAPI</artifactId>
+    <artifactId>CrucialAPI</artifactId>
     <version>2.0-SNAPSHOT.1</version>
 
     <name>CrucialAPI</name>

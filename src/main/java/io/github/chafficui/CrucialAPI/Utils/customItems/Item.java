@@ -1,8 +1,8 @@
-package io.github.chafficui.crucialAPI.utils.customItems;
+package io.github.chafficui.CrucialAPI.Utils.customItems;
 
-import io.github.chafficui.crucialAPI.utils.Server;
-import io.github.chafficui.crucialAPI.Main;
-import io.github.chafficui.crucialAPI.exceptions.CrucialException;
+import io.github.chafficui.CrucialAPI.Utils.Server;
+import io.github.chafficui.CrucialAPI.Main;
+import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

@@ -1,4 +1,4 @@
-package io.github.chafficui.crucialAPI.exceptions;
+package io.github.chafficui.CrucialAPI.exceptions;
 
 public class CrucialException extends Exception{
 

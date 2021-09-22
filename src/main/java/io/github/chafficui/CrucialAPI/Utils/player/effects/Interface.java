@@ -1,6 +1,6 @@
-package io.github.chafficui.crucialAPI.utils.player.effects;
+package io.github.chafficui.CrucialAPI.Utils.player.effects;
 
-import io.github.chafficui.crucialAPI.utils.api.Title;
+import io.github.chafficui.CrucialAPI.Utils.api.Title;
 import org.bukkit.entity.Player;
 
 public class Interface {

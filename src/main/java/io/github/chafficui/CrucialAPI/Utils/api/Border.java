@@ -1,6 +1,6 @@
-package io.github.chafficui.crucialAPI.utils.api;
+package io.github.chafficui.CrucialAPI.Utils.api;
 
-import io.github.chafficui.crucialAPI.Main;
+import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

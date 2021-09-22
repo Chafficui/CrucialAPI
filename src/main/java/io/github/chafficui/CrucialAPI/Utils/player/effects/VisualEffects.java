@@ -1,7 +1,7 @@
-package io.github.chafficui.crucialAPI.utils.player.effects;
+package io.github.chafficui.CrucialAPI.Utils.player.effects;
 
-import io.github.chafficui.crucialAPI.Main;
-import io.github.chafficui.crucialAPI.utils.api.Border;
+import io.github.chafficui.CrucialAPI.Main;
+import io.github.chafficui.CrucialAPI.Utils.api.Border;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;

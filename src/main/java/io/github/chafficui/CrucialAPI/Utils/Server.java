@@ -1,9 +1,7 @@
-package io.github.chafficui.crucialAPI.utils;
+package io.github.chafficui.CrucialAPI.Utils;
 
-import io.github.chafficui.crucialAPI.Main;
+import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
-
-import java.util.logging.Logger;
 
 public class Server {
     private static final Main plugin = Main.getPlugin(Main.class);

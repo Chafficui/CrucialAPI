@@ -1,7 +1,7 @@
-package io.github.chafficui.crucialAPI.utils;
+package io.github.chafficui.CrucialAPI.Utils;
 
-import io.github.chafficui.crucialAPI.exceptions.CrucialException;
-import io.github.chafficui.crucialAPI.utils.api.BStats;
+import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
+import io.github.chafficui.CrucialAPI.Utils.api.BStats;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -22,7 +22,7 @@ public class Stats {
     /**
      * @param name of the pie chart
      * @param data that will be processed in the pie chart
-     * @throws io.github.chafficui.crucialAPI.exceptions.CrucialException if there was no metrics created before.
+     * @throws io.github.chafficui.CrucialAPI.exceptions.CrucialException if there was no metrics created before.
      */
     public static void addPieChart(String name, String data) throws CrucialException {
         if(metrics != null){

@@ -1,6 +1,6 @@
-package io.github.chafficui.crucialAPI.events;
+package io.github.chafficui.CrucialAPI.Events;
 
-import io.github.chafficui.crucialAPI.utils.customItems.CrucialItem;
+import io.github.chafficui.CrucialAPI.Utils.customItems.CrucialItem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
