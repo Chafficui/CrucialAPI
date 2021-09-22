@@ -1,4 +1,4 @@
-package io.github.chafficui.CrucialAPI.Utils;
+package io.github.chafficui.crucialAPI.utils.api;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -10,9 +10,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class PackageUtils {
-
-    private static HashMap<Class<? extends Entity>, Method> handles = new HashMap<Class<? extends Entity>, Method>();
+public class Package {
+    private final static HashMap<Class<? extends Entity>, Method> HANDLES = new HashMap<Class<? extends Entity>, Method>();
     private static Field player_connection = null;
     private static Method player_sendPacket = null;
     public static String getVersion(){
@@ -44,11 +43,11 @@ public class PackageUtils {
     }
     public static Object getHandle(Entity entity){
         try {
-            if (handles.get(entity.getClass()) != null)
-                return handles.get(entity.getClass()).invoke(entity);
+            if (HANDLES.get(entity.getClass()) != null)
+                return HANDLES.get(entity.getClass()).invoke(entity);
             else {
                 Method entity_getHandle = entity.getClass().getMethod("getHandle");
-                handles.put(entity.getClass(), entity_getHandle);
+                HANDLES.put(entity.getClass(), entity_getHandle);
                 return entity_getHandle.invoke(entity);
             }
         }
@@ -60,14 +59,14 @@ public class PackageUtils {
     public static void sendPacket(Player p, Object packet) throws IllegalArgumentException {
         try {
             if (player_connection == null){
-                player_connection = Objects.requireNonNull(PackageUtils.getHandle(p)).getClass().getField("playerConnection");
-                for (Method m : player_connection.get(PackageUtils.getHandle(p)).getClass().getMethods()){
+                player_connection = Objects.requireNonNull(Package.getHandle(p)).getClass().getField("playerConnection");
+                for (Method m : player_connection.get(Package.getHandle(p)).getClass().getMethods()){
                     if (m.getName().equalsIgnoreCase("sendPacket")){
                         player_sendPacket = m;
                     }
                 }
             }
-            player_sendPacket.invoke(player_connection.get(PackageUtils.getHandle(p)), packet);
+            player_sendPacket.invoke(player_connection.get(Package.getHandle(p)), packet);
         }
         catch (IllegalAccessException | NoSuchFieldException | InvocationTargetException ex){
             ex.printStackTrace();

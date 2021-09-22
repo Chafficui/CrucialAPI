@@ -1,17 +1,14 @@
-package io.github.chafficui.CrucialAPI.Utils;
+package io.github.chafficui.crucialAPI.utils.api;
 
-import io.github.chafficui.CrucialAPI.Main;
+import io.github.chafficui.crucialAPI.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
-public class BorderUtils {
-
+public class Border {
     private static Method handle, sendPacket;
     private static Method center, distance, time, movement;
     private static Field player_connection;
@@ -58,13 +55,12 @@ public class BorderUtils {
     }
 
     private static Class<?> getClass(String prefix, String name) throws Exception {
-        return Class.forName(new StringBuilder().append(prefix + ".").append(Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1)).append(".").append(name).toString());
+        return Class.forName(prefix + "." + Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1) + "." + name);
     }
 
     Main plugin;
-    protected List<String> togglelist = new ArrayList<String>();
 
-    public BorderUtils(Main plugin) {
+    public Border(Main plugin) {
         this.plugin = plugin;
     }
     public void removeBorder(Player p) {
@@ -81,14 +77,10 @@ public class BorderUtils {
     }
 
     public void sendWorldBorderPacket(Player p, int dist, double oldradius, double newradius, long delay) {
-//
-//			New Reflection Version
-//
         try {
             Object wb = border_constructor.newInstance();
 
-            // Thanks Sashie for this
-            Method worldServer = getClass("org.bukkit.craftbukkit", "CraftWorld").getMethod("getHandle", (Class<?>[]) new Class[0]);
+            Method worldServer = getClass("org.bukkit.craftbukkit", "CraftWorld").getMethod("getHandle");
             Field world = getClass("net.minecraft.server", "WorldBorder").getField("world");
             world.set(wb, worldServer.invoke(p.getWorld()));
 

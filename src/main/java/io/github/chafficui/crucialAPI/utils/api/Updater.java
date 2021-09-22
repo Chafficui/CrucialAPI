@@ -1,54 +1,46 @@
-package io.github.chafficui.CrucialAPI.Utils;
+package io.github.chafficui.crucialAPI.utils.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.github.chafficui.CrucialAPI.API.Server;
+import io.github.chafficui.crucialAPI.exceptions.CrucialException;
+import io.github.chafficui.crucialAPI.utils.Server;
 import org.bukkit.plugin.Plugin;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class UpdateUtils {
+public class Updater {
 
     private static final String USER_AGENT = "Updater by Chaffic";
     // Direct download link
     private String downloadLink;
     // Provided plugin
-    private Plugin plugin;
+    private final Plugin plugin;
     // The folder where update will be downloaded
-    private File updateFolder;
+    private final File updateFolder;
     // The plugin file
-    private File file;
+    private final File file;
     // ID of a project
-    private int id;
+    private final int id;
     // return a page
     private int page = 1;
     // Set the update type
-    private UpdateType updateType;
+    private final UpdateType updateType;
     // Get the outcome result
-    private Result result = Result.SUCCESS;
     // If next page is empty set it to true, and get info from previous page.
     private boolean emptyPage;
-    // Version returned from spigot
-    private String version;
     // If true updater is going to log progress to the console.
-    private boolean logger;
-    // Updater thread
-    private Thread thread;
-
-    private static Logger log = Server.getLogger("CrucialAPI");
+    private final boolean logger;
 
     private static final String DOWNLOAD = "/download";
     private static final String VERSIONS = "/versions";
     private static final String PAGE = "?page=";
     private static final String API_RESOURCE = "https://api.spiget.org/v2/resources/";
 
-    public UpdateUtils(Plugin plugin, int id, File file, UpdateType updateType, boolean logger)
+    public Updater(Plugin plugin, int id, File file, UpdateType updateType, boolean logger)
     {
         this.plugin = plugin;
         this.updateFolder = plugin.getServer().getUpdateFolderFile();
@@ -59,7 +51,8 @@ public class UpdateUtils {
 
         downloadLink = API_RESOURCE + id;
 
-        thread = new Thread(new UpdaterRunnable());
+        // Updater thread
+        Thread thread = new Thread(new UpdaterRunnable());
         thread.start();
     }
 
@@ -72,43 +65,6 @@ public class UpdateUtils {
         // If updater finds new version automatically it downloads it.
         CHECK_DOWNLOAD
 
-    }
-
-    public enum Result
-    {
-
-        UPDATE_FOUND,
-
-        NO_UPDATE,
-
-        SUCCESS,
-
-        FAILED,
-
-        BAD_ID;
-    }
-
-    /**
-     * Get the result of the update.
-     *
-     * @return result of the update.
-     * @see Result
-     */
-    public Result getResult()
-    {
-        waitThread();
-        return result;
-    }
-
-    /**
-     * Get the latest version from spigot.
-     *
-     * @return latest version.
-     */
-    public String getVersion()
-    {
-        waitThread();
-        return version;
     }
 
     /**
@@ -130,7 +86,6 @@ public class UpdateUtils {
             if(code != 200)
             {
                 connection.disconnect();
-                result = Result.BAD_ID;
                 return false;
             }
             connection.disconnect();
@@ -181,19 +136,19 @@ public class UpdateUtils {
 
                 JsonObject object = element.getAsJsonObject();
                 element = object.get("name");
-                version = element.toString().replaceAll("\"", "").replace("v","");
+                // Version returned from spigot
+                String version = element.toString().replaceAll("\"", "").replace("v", "");
                 if(logger)
-                    log.info("Checking for update...");
+                    Server.log("Checking for update...");
                 if(shouldUpdate(version, plugin.getDescription().getVersion()) && updateType == UpdateType.VERSION_CHECK)
                 {
-                    result = Result.UPDATE_FOUND;
                     if(logger)
-                        log.info("Update found!");
+                        Server.log("Update found!");
                 }
                 else if(updateType == UpdateType.DOWNLOAD)
                 {
                     if(logger)
-                        log.info("Downloading update...");
+                        Server.log("Downloading update...");
                     download();
                 }
                 else if(updateType == UpdateType.CHECK_DOWNLOAD)
@@ -201,21 +156,19 @@ public class UpdateUtils {
                     if(shouldUpdate(version, plugin.getDescription().getVersion()))
                     {
                         if(logger)
-                            log.info("Update found, downloading now...");
+                            Server.log("Update found, downloading now...");
                         download();
                     }
                     else
                     {
                         if(logger)
-                            log.info("Update not found");
-                        result = Result.NO_UPDATE;
+                            Server.log("No update found.");
                     }
                 }
                 else
                 {
                     if(logger)
-                        log.info("Update not found");
-                    result = Result.NO_UPDATE;
+                        Server.log("No update found.");
                 }
             }
         }
@@ -238,8 +191,7 @@ public class UpdateUtils {
     /**
      * Downloads the file
      */
-    private void download()
-    {
+    private void download() throws CrucialException {
         BufferedInputStream in = null;
         FileOutputStream fout = null;
 
@@ -254,14 +206,12 @@ public class UpdateUtils {
                 fout.write(data, 0, count);
             }
             if(logger)
-                log.fine("Update dowloaded. Reload to use new Version.");
-            result = Result.SUCCESS;
+                Server.log("Update dowloaded. Reload to use new Version.");
         }
         catch (Exception e)
         {
             if(logger)
-                log.severe("Error 008: Updater tried to download the update, but was unsuccessful.");
-            result = Result.FAILED;
+                throw new CrucialException(8);
         }
         finally {
             try {
@@ -269,32 +219,14 @@ public class UpdateUtils {
                     in.close();
                 }
             } catch (final IOException e) {
-                this.log.log(Level.SEVERE, null, e);
-                e.printStackTrace();
+                Server.error(e.getLocalizedMessage());
             }
             try {
                 if (fout != null) {
                     fout.close();
                 }
             } catch (final IOException e) {
-                e.printStackTrace();
-                this.log.log(Level.SEVERE, null, e);
-            }
-        }
-    }
-
-    /**
-     * Updater depends on thread's completion, so it is necessary to wait for thread to finish.
-     */
-    private void waitThread()
-    {
-        if(thread != null && thread.isAlive())
-        {
-            try
-            {
-                thread.join();
-            } catch (InterruptedException e) {
-                this.log.log(Level.SEVERE, null, e);
+                Server.error(e.getLocalizedMessage());
             }
         }
     }

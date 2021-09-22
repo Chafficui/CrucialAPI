@@ -1,4 +1,4 @@
-package io.github.chafficui.CrucialAPI.Utils;
+package io.github.chafficui.crucialAPI.utils.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -21,7 +21,7 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
 
-public class StatUtils {
+public class BStats {
 
     static {
         // You can use the property to disable the check in your test environment
@@ -31,7 +31,7 @@ public class StatUtils {
                     new byte[]{'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's', '.', 'b', 'u', 'k', 'k', 'i', 't'});
             final String examplePackage = new String(new byte[]{'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e'});
             // We want to make sure nobody just copy & pastes the example and use the wrong package names
-            if (StatUtils.class.getPackage().getName().equals(defaultPackage) || StatUtils.class.getPackage().getName().equals(examplePackage)) {
+            if (BStats.class.getPackage().getName().equals(defaultPackage) || BStats.class.getPackage().getName().equals(examplePackage)) {
                 throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
             }
         }
@@ -44,7 +44,7 @@ public class StatUtils {
     private static final String URL = "https://bStats.org/submitData/bukkit";
 
     // Is bStats enabled on this server?
-    private boolean enabled;
+    private final boolean enabled;
 
     // Should failed requests be logged?
     private static boolean logFailedRequests;
@@ -74,7 +74,7 @@ public class StatUtils {
      * @param pluginId The id of the plugin.
      *                 It can be found at <a href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
-    public StatUtils(Plugin plugin, int pluginId) {
+    public BStats(Plugin plugin, int pluginId) {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null!");
         }
@@ -130,7 +130,7 @@ public class StatUtils {
                 } catch (NoSuchFieldException ignored) { }
             }
             // Register our service
-            Bukkit.getServicesManager().register(StatUtils.class, this, plugin, ServicePriority.Normal);
+            Bukkit.getServicesManager().register(BStats.class, this, plugin, ServicePriority.Normal);
             if (!found) {
                 // We are the first!
                 startSubmitting();

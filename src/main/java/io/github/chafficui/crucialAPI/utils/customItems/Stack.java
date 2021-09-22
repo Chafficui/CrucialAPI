@@ -1,4 +1,4 @@
-package io.github.chafficui.CrucialAPI.API;
+package io.github.chafficui.crucialAPI.utils.customItems;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -11,14 +11,14 @@ import java.util.List;
 
 public class Stack {
 
-    public static ItemStack setStack(Material material){
+    public static ItemStack getStack(Material material){
         if(material!=null){
             return new ItemStack(material);
         }
         return new ItemStack(Material.AIR);
     }
 
-    public static ItemStack setStack(Material material, String name){
+    public static ItemStack getStack(Material material, String name){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         assert meta != null;
@@ -26,7 +26,7 @@ public class Stack {
         return getCleanMeta(stack, meta);
     }
 
-    public static ItemStack setStack(Material material, String name, List<String> lore){
+    public static ItemStack getStack(Material material, String name, List<String> lore){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         assert meta != null;
@@ -35,11 +35,11 @@ public class Stack {
         return getCleanMeta(stack, meta);
     }
 
-    public static ItemStack setStack(String head, String name, List<String> lore){
+    public static ItemStack getStack(String head, String name, List<String> lore){
         ItemStack stack = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
         SkullMeta meta = (SkullMeta) stack.getItemMeta();
 
-        stack = getCleanMeta(stack, meta);
+        getCleanMeta(stack, meta);
         meta = (SkullMeta) stack.getItemMeta();
 
         meta.setDisplayName(name);
@@ -49,13 +49,7 @@ public class Stack {
 
         return stack;
     }
-
-    /**
-     * Will be replaced soon
-     * Do not use
-     */
-    @Deprecated
-    public static ItemStack setStack(Material material, String name, List<String> lore, boolean shiny){
+    public static ItemStack getStack(Material material, String name, List<String> lore, boolean shiny){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
         assert meta != null;

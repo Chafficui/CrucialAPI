@@ -1,4 +1,4 @@
-package io.github.chafficui.CrucialAPI.io;
+package io.github.chafficui.crucialAPI.io;
 
 import com.google.gson.Gson;
 

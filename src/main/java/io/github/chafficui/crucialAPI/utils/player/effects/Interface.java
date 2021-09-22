@@ -1,17 +1,16 @@
-package io.github.chafficui.CrucialAPI.API;
+package io.github.chafficui.crucialAPI.utils.player.effects;
 
-import io.github.chafficui.CrucialAPI.Utils.TitleUtils;
+import io.github.chafficui.crucialAPI.utils.api.Title;
 import org.bukkit.entity.Player;
 
 public class Interface {
-
     /**
      * @param player a player to show the text to.
      * @param title the title to show to the player.
      * @param subTitle the smaller message below the title.
      */
     public static void showText(Player player, String title, String subTitle){
-        TitleUtils.sendTitle(player, 10, 40, 10, title, subTitle);
+        Title.sendTitle(player, 10, 40, 10, title, subTitle);
     }
 
     /**
@@ -21,7 +20,7 @@ public class Interface {
      * @param seconds the time the title should be shown.
      */
     public static void showText(Player player, String title, String subTitle, int seconds){
-        TitleUtils.sendTitle(player, 0, seconds, 0, title, subTitle);
+        Title.sendTitle(player, 0, seconds, 0, title, subTitle);
     }
 
     /**
@@ -32,7 +31,7 @@ public class Interface {
      * @param fade the time the title should fade in/out.
      */
     public static void showText(Player player, String title, String subTitle, int seconds, int fade){
-        TitleUtils.sendTitle(player, fade, seconds, fade, title, subTitle);
+        Title.sendTitle(player, fade, seconds, fade, title, subTitle);
     }
 
     /**
@@ -44,14 +43,14 @@ public class Interface {
      * @param fadeOut the time the title should fade out.
      */
     public static void showText(Player player, String title, String subTitle, int seconds, int fadeIn, int fadeOut){
-        TitleUtils.sendTitle(player, fadeIn, seconds, fadeOut, title, subTitle);
+        Title.sendTitle(player, fadeIn, seconds, fadeOut, title, subTitle);
     }
 
     /**
      * @param player a player to clear the shown title.
      */
     public static void clearText(Player player){
-        TitleUtils.sendTitle(player, 0, 0, 0, "", "");
+        Title.sendTitle(player, 0, 0, 0, "", "");
     }
 
     /**
@@ -75,7 +74,7 @@ public class Interface {
      * @param player a player to reset the tablist from.
      */
     public static void removeTablist(Player player){
-        player.setPlayerListHeaderFooter(null, null);
+        player.setPlayerListHeaderFooter("", "");
     }
 
     /**

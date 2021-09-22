@@ -1,4 +1,4 @@
-package io.github.chafficui.CrucialAPI.Utils;
+package io.github.chafficui.crucialAPI.utils.api;
 
 import org.bukkit.entity.Player;
 
@@ -7,11 +7,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
-public class TitleUtils {
-
-    private static Class<?> packetClass = null;
+public class Title {
     private static Class<?> componentClass = null;
-    private static Class<?> packetTabClass = null;
     private static Class<?> serializerClass = null;
     private static Constructor<?> packetConstructor = null;
     private static Constructor<?> packetTabConstructor = null;
@@ -25,8 +22,8 @@ public class TitleUtils {
             Object titlePacket;
             try {
                 titleSer = serializerClass.getMethod("a", String.class).invoke(null, "{\"text\": \"" + title + "\"}");
-                titlePacket = packetConstructor.newInstance(enumTitleAction.getEnumConstants()[0], titleSer, fadeIn.intValue(), stay.intValue(), fadeOut.intValue());
-                PackageUtils.sendPacket(p, titlePacket);
+                titlePacket = packetConstructor.newInstance(enumTitleAction.getEnumConstants()[0], titleSer, fadeIn, stay, fadeOut);
+                Package.sendPacket(p, titlePacket);
             } catch (IllegalAccessException | InstantiationException | SecurityException | NoSuchMethodException | InvocationTargetException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
@@ -34,10 +31,10 @@ public class TitleUtils {
     }
 
     private static void tries(Player p, Integer fadeIn, Integer stay, Integer fadeOut, String subtitle) {
-        packetClass = PackageUtils.getNmsClass("PacketPlayOutTitle");
-        componentClass = PackageUtils.getNmsClass("IChatBaseComponent");
-        serializerClass = PackageUtils.getNmsClass("IChatBaseComponent$ChatSerializer");
-        enumTitleAction = (Class<Enum>) PackageUtils.getNmsClass("PacketPlayOutTitle$EnumTitleAction");
+        Class<?> packetClass = Package.getNmsClass("PacketPlayOutTitle");
+        componentClass = Package.getNmsClass("IChatBaseComponent");
+        serializerClass = Package.getNmsClass("IChatBaseComponent$ChatSerializer");
+        enumTitleAction = (Class<Enum>) Package.getNmsClass("PacketPlayOutTitle$EnumTitleAction");
         try {
             packetConstructor = packetClass.getConstructor(enumTitleAction, componentClass, int.class, int.class, int.class);
         } catch (NoSuchMethodException | SecurityException e) {
@@ -48,8 +45,8 @@ public class TitleUtils {
             Object subTitlePacket;
             try {
                 subTitleSer = serializerClass.getMethod("a", String.class).invoke(null, "{\"text\": \"" + subtitle + "\"}");
-                subTitlePacket = packetConstructor.newInstance(enumTitleAction.getEnumConstants()[1], subTitleSer, fadeIn.intValue(), stay.intValue(), fadeOut.intValue());
-                PackageUtils.sendPacket(p, subTitlePacket);
+                subTitlePacket = packetConstructor.newInstance(enumTitleAction.getEnumConstants()[1], subTitleSer, fadeIn, stay, fadeOut);
+                Package.sendPacket(p, subTitlePacket);
             } catch (IllegalAccessException | SecurityException | NoSuchMethodException | InvocationTargetException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
@@ -64,9 +61,9 @@ public class TitleUtils {
     }
 
     public static void sendTabTitle(Player p, String header, String footer) {
-        packetTabClass = PackageUtils.getNmsClass("PacketPlayOutPlayerListHeaderFooter");
-        componentClass = PackageUtils.getNmsClass("IChatBaseComponent");
-        serializerClass = PackageUtils.getNmsClass("IChatBaseComponent$ChatSerializer");
+        Class<?> packetTabClass = Package.getNmsClass("PacketPlayOutPlayerListHeaderFooter");
+        componentClass = Package.getNmsClass("IChatBaseComponent");
+        serializerClass = Package.getNmsClass("IChatBaseComponent$ChatSerializer");
         try {
             packetTabConstructor = packetTabClass.getConstructor(componentClass);
         } catch (NoSuchMethodException | SecurityException e1) {
@@ -84,7 +81,7 @@ public class TitleUtils {
             Field field = headerPacket.getClass().getDeclaredField("b");
             field.setAccessible(true);
             field.set(headerPacket, tabFoot);
-            PackageUtils.sendPacket(p, headerPacket);
+            Package.sendPacket(p, headerPacket);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | InstantiationException | NoSuchFieldException e) {
             e.printStackTrace();
         }

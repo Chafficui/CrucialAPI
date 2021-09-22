@@ -1,7 +1,7 @@
-package io.github.chafficui.CrucialAPI.API;
+package io.github.chafficui.crucialAPI.utils.player.effects;
 
-import io.github.chafficui.CrucialAPI.Main;
-import io.github.chafficui.CrucialAPI.Utils.BorderUtils;
+import io.github.chafficui.crucialAPI.Main;
+import io.github.chafficui.crucialAPI.utils.api.Border;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -9,24 +9,23 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-public class Effects {
-
+public class VisualEffects {
     private static final Main plugin = Main.getPlugin(Main.class);
-    private static final BorderUtils functions = new BorderUtils(plugin);
+    private static final Border border = new Border(plugin);
 
     /**
      * @param player a player to receive the blood effect.
      * @param percentage strength of the blood effect.
      */
     public static void setBlood(Player player, int percentage){
-        functions.setBorder(player, 100 - percentage);
+        border.setBorder(player, 100 - percentage);
     }
 
     /**
      * @param player a player whose screen is to be cleaned of blood.
      */
     public static void removeBlood(Player player){
-        functions.removeBorder(player);
+        border.removeBorder(player);
     }
 
     /**
