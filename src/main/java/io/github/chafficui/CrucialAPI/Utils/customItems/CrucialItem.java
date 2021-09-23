@@ -39,15 +39,15 @@ public class CrucialItem {
     }
 
     //Custom Item
-    private NamespacedKey namespacedKey;
-    private String name = "";
+    protected NamespacedKey namespacedKey;
+    protected String name = "";
     public boolean isHead = false;
-    private String material = "";
-    private List<String> lore = new ArrayList<>();
-    private String[] recipe = new String[9];
-    private final UUID id;
-    private final String type;
-    private boolean isRegistered = false;
+    protected String material = "";
+    protected List<String> lore = new ArrayList<>();
+    protected String[] recipe = new String[9];
+    protected final UUID id;
+    protected final String type;
+    protected boolean isRegistered = false;
 
     public boolean isCraftable = true;
     public boolean isUsable = true;
@@ -84,9 +84,19 @@ public class CrucialItem {
         this.material = material.name();
     }
 
+    public void unregister() {
+        if(isRegistered) {
+            if(Bukkit.getRecipe(namespacedKey) != null){
+                Bukkit.removeRecipe(namespacedKey);
+            }
+            CRUCIAL_ITEMS.remove(this);
+            isRegistered = false;
+        }
+    }
+
     public void register() throws CrucialException {
         if(!isRegistered){
-            if(!CRUCIAL_ITEMS.contains(this)) {
+            if(!CRUCIAL_ITEMS.contains(this) ) {
                 if (isHead) {
                     namespacedKey = Item.createHead(getKey(), name, getUniqueLore(), material, recipe);
                 } else {
