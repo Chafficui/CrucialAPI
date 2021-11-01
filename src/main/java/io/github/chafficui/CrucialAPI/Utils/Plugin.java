@@ -19,7 +19,7 @@ public class Plugin {
     }
 
     public static void getVersion(String version, JavaPlugin plugin){
-        if(!version.equals(plugin.getDescription().getVersion())) {
+        if(!version.equals(PLUGIN.getDescription().getVersion())) {
             try {
                 URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
                 ReadableByteChannel rbc = Channels.newChannel(website.openStream());
