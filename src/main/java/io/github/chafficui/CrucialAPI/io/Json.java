@@ -11,46 +11,36 @@ import java.lang.reflect.Type;
 public class Json {
     static Gson g = new Gson();
 
-    public static void saveFile(String json, String filename){
-        try (FileWriter file = new FileWriter(filename)) {
-
-            file.write(json);
-            file.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void saveFile(String json, String filename) throws IOException {
+        FileWriter file = new FileWriter(filename);
+        file.write(json);
+        file.flush();
     }
 
-    public static String loadFile(String filename){
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
+    public static String loadFile(String filename) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(filename));
+        StringBuilder sb = new StringBuilder();
+        String line = br.readLine();
 
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            String everything = sb.toString();
-            br.close();
-            return everything;
-        } catch (IOException e) {
-            e.printStackTrace();
+        while (line != null) {
+            sb.append(line);
+            sb.append(System.lineSeparator());
+            line = br.readLine();
         }
-        return "";
+        String everything = sb.toString();
+        br.close();
+        return everything;
     }
 
     public static String toJson(Object object){
         return g.toJson(object);
     }
 
-    public static <T> T fromJson(String jsonFilePath, Class<T> objectType){
+    public static <T> T fromJson(String jsonFilePath, Class<T> objectType) throws IOException {
         return g.fromJson(loadFile(jsonFilePath), objectType);
     }
 
-    public static <T> T fromJson(String jsonFilePath, Type type){
+    public static <T> T fromJson(String jsonFilePath, Type type) throws IOException {
         return g.fromJson(loadFile(jsonFilePath), type);
     }
 }
