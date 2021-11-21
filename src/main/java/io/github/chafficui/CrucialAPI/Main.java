@@ -30,17 +30,6 @@ public final class Main extends JavaPlugin {
                 ex.printStackTrace();
             }
         }
-        /* //maybe later
-        if(getConfig().getBoolean("settings.AUTO_UPDATE")){
-            new Updater(
-                    this,
-                    86380,
-                    super.getFile(),
-                    Updater.UpdateType.CHECK_DOWNLOAD,
-                    true
-            );
-        }
-        */
         log(ChatColor.DARK_GREEN + getDescription().getName() + " is now enabled (Version: " + version + ") made by "
                 + ChatColor.AQUA + getDescription().getAuthors() + ".");
     }

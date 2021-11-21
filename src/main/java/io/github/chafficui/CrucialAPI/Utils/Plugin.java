@@ -18,17 +18,13 @@ public class Plugin {
         return PLUGIN.getDescription().getVersion();
     }
 
-    public static void getVersion(String version, JavaPlugin plugin){
+    public static void getVersion(String version, JavaPlugin plugin) throws IOException {
         if(!version.equals(PLUGIN.getDescription().getVersion())) {
-            try {
-                URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
-                ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-                FileOutputStream fos = new FileOutputStream("plugins/CrucialAPI.jar");
-                fos.getChannel().transferFrom(rbc, 0L, Long.MAX_VALUE);
-                Bukkit.reload();
-            } catch (IOException e) {
-                PLUGIN.getLogger().severe("Error 28: Failed to update CrucialAPI");
-            }
+            URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            FileOutputStream fos = new FileOutputStream("plugins/CrucialAPI.jar");
+            fos.getChannel().transferFrom(rbc, 0L, Long.MAX_VALUE);
+            Bukkit.reload();
         }
     }
 }
