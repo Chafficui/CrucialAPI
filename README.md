@@ -1,2 +1,2 @@
 # CrucialAPI
-[![CrucialAPI Maven](https://maven-badges.herokuapp.com/maven-central/io.github.chafficui/CrucialAPI/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.chafficui/CrucialAPI)
+[![](https://jitpack.io/v/Chafficui/CrucialAPI.svg)](https://jitpack.io/#Chafficui/CrucialAPI)
