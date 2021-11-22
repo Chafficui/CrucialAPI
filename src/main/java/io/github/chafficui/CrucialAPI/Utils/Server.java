@@ -1,10 +1,11 @@
 package io.github.chafficui.CrucialAPI.Utils;
 
-import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
 
+import java.util.logging.Logger;
+
 public class Server {
-    private static final Main plugin = Main.getPlugin(Main.class);
+    private final static Logger logger = Logger.getLogger("CrucialAPI");
 
     public static String getVersion(){
         return Bukkit.getVersion();
@@ -26,10 +27,10 @@ public class Server {
     }
 
     public static void log(String message){
-        plugin.log(message);
+        logger.info(message);
     }
 
     public static void error(String message){
-        plugin.error(message);
+        logger.severe(message);
     }
 }

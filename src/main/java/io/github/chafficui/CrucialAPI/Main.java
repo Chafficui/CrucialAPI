@@ -1,6 +1,7 @@
 package io.github.chafficui.CrucialAPI;
 
 import io.github.chafficui.CrucialAPI.Utils.Plugin;
+import io.github.chafficui.CrucialAPI.Utils.Server;
 import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
 import org.bukkit.Bukkit;
@@ -13,7 +14,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.logging.Logger;
 
 public final class Main extends JavaPlugin {
     private final String version = getDescription().getVersion();
@@ -21,6 +21,10 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        if(!Server.checkCompatibility("1.15", "1.16", "1.17")) {
+            Server.error("Your server is not compatible with this plugin. Please update to 1.15 or 1.16 or 1.17.");
+        }
+
         new Stats(this, 9549);
         try {
             setupConfig();
@@ -31,7 +35,7 @@ public final class Main extends JavaPlugin {
                 ex.printStackTrace();
             }
         }
-        log(ChatColor.DARK_GREEN + getDescription().getName() + " is now enabled (Version: " + version + ") made by "
+        Server.log(ChatColor.DARK_GREEN + getDescription().getName() + " is now enabled (Version: " + version + ") made by "
                 + ChatColor.AQUA + getDescription().getAuthors() + ".");
     }
 
@@ -39,20 +43,12 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         Bukkit.getScheduler().cancelTasks(this);
-        log(ChatColor.DARK_GREEN + getDescription().getName() + " is now disabled.");
+        Server.log(ChatColor.DARK_GREEN + getDescription().getName() + " is now disabled.");
     }
 
     public
     File getFile(){
         return super.getFile();
-    }
-
-    public void log(String message){
-        Logger.getLogger("CrucialAPI").info(message);
-    }
-
-    public void error(String message){
-        Logger.getLogger("CrucialAPI").severe(message);
     }
 
     public String getVersion() {
