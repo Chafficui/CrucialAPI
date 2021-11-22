@@ -1,5 +1,6 @@
 package io.github.chafficui.CrucialAPI;
 
+import io.github.chafficui.CrucialAPI.Utils.Plugin;
 import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
 import org.bukkit.Bukkit;
@@ -20,7 +21,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        Stats.setMetrics(this, 9549);
+        new Stats(this, 9549);
         try {
             setupConfig();
         } catch (IOException e) {
@@ -58,13 +59,16 @@ public final class Main extends JavaPlugin {
         return version;
     }
 
+    /**
+     * @deprecated moved to {@link Plugin#getVersion()}
+     */
+    @Deprecated
     public void downgradeToLegacyVersion(String version) throws CrucialException {
         if(!version.equalsIgnoreCase((this.version))){
             try {
-                URL website = new URL("https://github.com/Chafficui/BSLib/releases/download/v" + version
-                        + "/BSLib-v" + version + ".jar");
+                URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
                 ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-                FileOutputStream fos = new FileOutputStream("plugins/BSLib.jar");
+                FileOutputStream fos = new FileOutputStream("plugins/CrucialAPI.jar");
                 fos.getChannel().transferFrom(rbc, 0L, Long.MAX_VALUE);
             } catch (IOException e) {
                 throw new CrucialException(28);
