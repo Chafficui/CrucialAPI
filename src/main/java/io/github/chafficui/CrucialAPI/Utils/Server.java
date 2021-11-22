@@ -10,14 +10,19 @@ public class Server {
         return Bukkit.getVersion();
     }
 
-    public static boolean checkCompatibility(String[] validVersions){
-        for (String validVersion :
-                validVersions) {
-            if (Bukkit.getVersion().contains(validVersion)) {
-                return true;
+    public static boolean checkCompatibility(String... validVersions){
+        try {
+            for (String validVersion :
+                    validVersions) {
+                if (Bukkit.getVersion().contains(validVersion)) {
+                    return true;
+                }
             }
+            return false;
+        } catch (Exception | Error e){
+            error("Error checking compatibility. There might be issues with plugins that use CrucialAPI!");
+            return true;
         }
-        return false;
     }
 
     public static void log(String message){
