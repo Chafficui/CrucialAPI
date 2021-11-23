@@ -13,25 +13,49 @@ public class CrucialItem {
     //Custom Items
     public final static Set<CrucialItem> CRUCIAL_ITEMS = new HashSet<>();
 
+    /**
+     * @deprecated Use {@link CrucialItem#getId(ItemStack)} ()} instead.
+     */
+    @Deprecated
     public static String getKey(ItemStack stack){
         if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
+            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1)).substring(0,36);
+        }
+        return null;
+    }
+
+    public static UUID getId(ItemStack stack){
+        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
+            return UUID.fromString(ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1)));
         }
         return null;
     }
 
     public static CrucialItem getByStack(ItemStack stack){
-        String key = getKey(stack);
-        if(key != null){
-            return getByKey(key);
+        UUID id = getId(stack);
+        if(id != null){
+            return getById(id);
         }
         return null;
     }
 
+    public static CrucialItem getById(UUID id){
+        for(CrucialItem crucialItem: CRUCIAL_ITEMS){
+            if(crucialItem.getId().equals(id)){
+                return crucialItem;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @deprecated Use {@link CrucialItem#getById(UUID)} ()} instead.
+     */
+    @Deprecated
     public static CrucialItem getByKey(String key){
         for (CrucialItem crucialItem :
                 CRUCIAL_ITEMS) {
-            if(crucialItem.getKey().equalsIgnoreCase(key)){
+            if(crucialItem.getId().equals(UUID.fromString(key.substring(0,36)))){
                 return crucialItem;
             }
         }
@@ -98,9 +122,9 @@ public class CrucialItem {
         if(!isRegistered){
             if(!CRUCIAL_ITEMS.contains(this) ) {
                 if (isHead) {
-                    namespacedKey = Item.createHead(getKey(), name, getUniqueLore(), material, recipe);
+                    namespacedKey = Item.createHead(id+type, name, getUniqueLore(), material, recipe);
                 } else {
-                    namespacedKey = Item.createItem(getKey(), name, getUniqueLore(), Material.getMaterial(material), recipe);
+                    namespacedKey = Item.createItem(id+type, name, getUniqueLore(), Material.getMaterial(material), recipe);
                 }
                 isRegistered = true;
                 CRUCIAL_ITEMS.add(this);
@@ -114,9 +138,9 @@ public class CrucialItem {
         if(isRegistered){
             Bukkit.removeRecipe(namespacedKey);
             if(isHead){
-                namespacedKey = Item.createHead(getKey(), name, getUniqueLore(), material, recipe);
+                namespacedKey = Item.createHead(id+type, name, getUniqueLore(), material, recipe);
             } else {
-                namespacedKey = Item.createItem(getKey(), name, getUniqueLore(), Material.getMaterial(material), recipe);
+                namespacedKey = Item.createItem(id+type, name, getUniqueLore(), Material.getMaterial(material), recipe);
             }
         }
     }
@@ -195,6 +219,10 @@ public class CrucialItem {
         return type;
     }
 
+    /**
+     * @deprecated Use {@link CrucialItem#getId()} ()} instead.
+     */
+    @Deprecated
     public String getKey(){
         return id+type;
     }
