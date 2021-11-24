@@ -66,6 +66,7 @@ public class CrucialItem {
     protected NamespacedKey namespacedKey;
     protected String name = "";
     public boolean isHead = false;
+    protected UUID headOwner = null;
     protected String material = "";
     protected List<String> lore = new ArrayList<>();
     protected String[] recipe = new String[9];
@@ -82,6 +83,24 @@ public class CrucialItem {
         this.type = type;
     }
 
+    public CrucialItem(String name, UUID owningPlayer, List<String> lore, String[] recipe, String type, boolean isCraftable, boolean isUsable, boolean isAllowedForCrafting) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.lore = lore;
+        this.recipe = recipe;
+        this.type = type;
+        this.isCraftable = isCraftable;
+        this.isUsable = isUsable;
+        this.isAllowedForCrafting = isAllowedForCrafting;
+        this.isHead = true;
+        this.material = Material.PLAYER_HEAD.toString();
+        this.headOwner = owningPlayer;
+    }
+
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public CrucialItem(String name, String head, List<String> lore, String[] recipe, String type, boolean isCraftable, boolean isUsable, boolean isAllowedForCrafting) {
         this.id = UUID.randomUUID();
         this.name = name;
@@ -121,11 +140,7 @@ public class CrucialItem {
     public void register() throws CrucialException {
         if(!isRegistered){
             if(!CRUCIAL_ITEMS.contains(this) ) {
-                if (isHead) {
-                    namespacedKey = Item.createHead(id+type, name, getUniqueLore(), material, recipe);
-                } else {
-                    namespacedKey = Item.createItem(id+type, name, getUniqueLore(), Material.getMaterial(material), recipe);
-                }
+                registerRecipe();
                 isRegistered = true;
                 CRUCIAL_ITEMS.add(this);
             } else {
@@ -137,11 +152,19 @@ public class CrucialItem {
     public void reload() throws CrucialException {
         if(isRegistered){
             Bukkit.removeRecipe(namespacedKey);
-            if(isHead){
-                namespacedKey = Item.createHead(id+type, name, getUniqueLore(), material, recipe);
+            registerRecipe();
+        }
+    }
+
+    private void registerRecipe() throws CrucialException {
+        if(isHead){
+            if(headOwner != null) {
+                namespacedKey = Item.createHead(id+type, name, getUniqueLore(), headOwner, recipe);
             } else {
-                namespacedKey = Item.createItem(id+type, name, getUniqueLore(), Material.getMaterial(material), recipe);
+                namespacedKey = Item.createHead(id+type, name, getUniqueLore(), material, recipe);
             }
+        } else {
+            namespacedKey = Item.createItem(id+type, name, getUniqueLore(), Material.getMaterial(material), recipe);
         }
     }
 

@@ -1,5 +1,6 @@
 package io.github.chafficui.CrucialAPI.Utils.customItems;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -8,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Stack {
 
@@ -35,10 +37,29 @@ public class Stack {
         return getCleanMeta(stack, meta);
     }
 
+    public static ItemStack getStack(UUID uuid, String name, List<String> lore){
+        ItemStack stack = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta meta = (SkullMeta) stack.getItemMeta();
+        assert meta != null;
+        getCleanMeta(stack, meta);
+        meta = (SkullMeta) stack.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
+        meta.setLore(lore);
+        stack.setItemMeta(meta);
+
+        return stack;
+    }
+
+    /**
+     * @deprecated use {@link #getStack(UUID, String, List)} instead
+     */
+    @Deprecated
     public static ItemStack getStack(String head, String name, List<String> lore){
         ItemStack stack = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
         SkullMeta meta = (SkullMeta) stack.getItemMeta();
 
+        assert meta != null;
         getCleanMeta(stack, meta);
         meta = (SkullMeta) stack.getItemMeta();
 
@@ -49,6 +70,7 @@ public class Stack {
 
         return stack;
     }
+
     public static ItemStack getStack(Material material, String name, List<String> lore, boolean shiny){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
