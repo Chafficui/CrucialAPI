@@ -19,14 +19,14 @@ public class CrucialItem {
     @Deprecated
     public static String getKey(ItemStack stack){
         if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1)).substring(0,36);
+            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
         }
         return null;
     }
 
     public static UUID getId(ItemStack stack){
         if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            return UUID.fromString(ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1)));
+            return UUID.fromString(ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1)).substring(0,35));
         }
         return null;
     }
@@ -55,7 +55,7 @@ public class CrucialItem {
     public static CrucialItem getByKey(String key){
         for (CrucialItem crucialItem :
                 CRUCIAL_ITEMS) {
-            if(crucialItem.getId().equals(UUID.fromString(key.substring(0,36)))){
+            if(crucialItem.getId().equals(UUID.fromString(key.substring(0,35)))){
                 return crucialItem;
             }
         }
@@ -179,7 +179,11 @@ public class CrucialItem {
     public ItemStack getItemStack(){
         if(isRegistered){
             if(isHead){
-                return Stack.getStack(material, name, getUniqueLore());
+                if(headOwner != null) {
+                    return Stack.getStack(headOwner, name, getUniqueLore());
+                } else {
+                    return Stack.getStack(material, name, getUniqueLore());
+                }
             } else {
                 return Stack.getStack(Material.getMaterial(material), name, getUniqueLore());
             }
