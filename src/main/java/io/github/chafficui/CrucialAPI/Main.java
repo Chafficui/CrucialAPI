@@ -1,11 +1,15 @@
 package io.github.chafficui.CrucialAPI;
 
+import io.github.chafficui.CrucialAPI.Events.CrucialItemEvents;
 import io.github.chafficui.CrucialAPI.Utils.Plugin;
 import io.github.chafficui.CrucialAPI.Utils.Server;
-import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
+import io.github.chafficui.CrucialAPI.Utils.player.inventory.InventoryListener;
+import io.github.chafficui.CrucialAPI.Utils.player.inventory.Page;
+import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -21,10 +25,10 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        if(!Server.checkCompatibility("1.15", "1.16", "1.17")) {
+        if (!Server.checkCompatibility("1.15", "1.16", "1.17")) {
             Server.error("Your server is not compatible with this plugin. Please update to 1.15 or 1.16 or 1.17.");
         }
-
+        registerEvents(new CrucialItemEvents(), new InventoryListener());
         new Stats(this, 9549);
         try {
             setupConfig();
@@ -46,9 +50,14 @@ public final class Main extends JavaPlugin {
         Server.log(ChatColor.DARK_GREEN + getDescription().getName() + " is now disabled.");
     }
 
-    public
-    File getFile(){
+    public File getFile() {
         return super.getFile();
+    }
+
+    private void registerEvents(Listener... listeners) {
+        for (Listener listener : listeners) {
+            getServer().getPluginManager().registerEvents(listener, this);
+        }
     }
 
     public String getVersion() {

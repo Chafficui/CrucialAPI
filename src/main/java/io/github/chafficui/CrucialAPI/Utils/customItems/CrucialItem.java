@@ -26,7 +26,11 @@ public class CrucialItem {
 
     public static UUID getId(ItemStack stack){
         if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            return UUID.fromString(ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1)).substring(0,35));
+            String key = ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
+            if(key.length() < 36){
+                return null;
+            }
+            return UUID.fromString(key.substring(0,36));
         }
         return null;
     }
@@ -41,7 +45,7 @@ public class CrucialItem {
 
     public static CrucialItem getById(UUID id){
         for(CrucialItem crucialItem: CRUCIAL_ITEMS){
-            if(crucialItem.getId().equals(id)){
+            if(crucialItem.id.equals(id)){
                 return crucialItem;
             }
         }
@@ -55,7 +59,7 @@ public class CrucialItem {
     public static CrucialItem getByKey(String key){
         for (CrucialItem crucialItem :
                 CRUCIAL_ITEMS) {
-            if(crucialItem.getId().equals(UUID.fromString(key.substring(0,35)))){
+            if(crucialItem.getId().equals(UUID.fromString(key.substring(0,36)))){
                 return crucialItem;
             }
         }
