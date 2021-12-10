@@ -3,24 +3,27 @@ package io.github.chafficui.CrucialAPI.Utils.player.inventory;
 import io.github.chafficui.CrucialAPI.Utils.customItems.Stack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class InventoryItem {
+    private final ItemStack stack;
     private final int slot;
-    private final Material material;
-    private final String name;
     private final Action action;
-    private final List<String> lore;
     public final HashMap<String, Object> extraData = new HashMap<>();
 
     public InventoryItem(int slot, Material material, String name, List<String> lore, Action action) {
-        this.slot = slot;
-        this.material = material;
-        this.name = name;
+        this.stack = Stack.getStack(material, name, lore);
         this.action = action;
-        this.lore = lore;
+        this.slot = slot;
+    }
+
+    public InventoryItem(int slot, ItemStack stack, Action action) {
+        this.slot = slot;
+        this.stack = stack;
+        this.action = action;
     }
 
     public int getSlot() {
@@ -28,19 +31,27 @@ public class InventoryItem {
     }
 
     public Material getMaterial() {
-        return material;
+        return stack.getType();
     }
 
     public ItemStack getItem() {
-        return Stack.getStack(material, name);
+        return stack;
     }
 
     public String getName() {
-        return name;
+        ItemMeta meta = stack.getItemMeta();
+        if(meta != null) {
+            return meta.getDisplayName();
+        }
+        return "";
     }
 
     public List<String> getLore() {
-        return lore;
+        ItemMeta meta = stack.getItemMeta();
+        if(meta != null) {
+            return meta.getLore();
+        }
+        return null;
     }
 
     public void execute(InventoryClick click) {
