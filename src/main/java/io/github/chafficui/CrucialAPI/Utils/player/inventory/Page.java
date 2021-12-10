@@ -2,6 +2,7 @@ package io.github.chafficui.CrucialAPI.Utils.player.inventory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
@@ -67,10 +68,10 @@ public class Page {
         }
     }
 
-    public void click(int slot, Player player) {
+    public void click(InventoryClickEvent event) {
         for (InventoryItem item : inventoryItems) {
-            if (item.getSlot() == slot) {
-                item.execute(this, player);
+            if (item.getSlot() == event.getSlot()) {
+                item.execute(new InventoryClick(event, this));
             }
         }
     }

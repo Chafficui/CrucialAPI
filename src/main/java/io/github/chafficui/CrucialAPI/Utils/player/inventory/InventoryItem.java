@@ -2,7 +2,6 @@ package io.github.chafficui.CrucialAPI.Utils.player.inventory;
 
 import io.github.chafficui.CrucialAPI.Utils.customItems.Stack;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -44,11 +43,11 @@ public class InventoryItem {
         return lore;
     }
 
-    public void execute(Page page, Player player) {
-        action.run(page, player);
+    public void execute(InventoryClick click) {
+        action.run(click);
     }
 
     public interface Action {
-        void run(Page page, Player player);
+        void run(InventoryClick click);
     }
 }

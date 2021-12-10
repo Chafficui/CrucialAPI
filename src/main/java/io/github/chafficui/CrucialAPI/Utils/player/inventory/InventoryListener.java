@@ -15,7 +15,7 @@ public class InventoryListener implements Listener {
         Page page = Page.get(event.getInventory());
         HumanEntity entity = event.getWhoClicked();
         if(page != null && event.getClick().equals(ClickType.LEFT) && entity instanceof Player) {
-            page.click(event.getSlot(), (Player) entity);
+            page.click(event);
             event.setCancelled(true);
         }
     }
