@@ -1,17 +1,14 @@
 package io.github.chafficui.CrucialAPI.Utils.player.inventory;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.List;
 
 public class Page {
-    private final static ArrayList<Page> pages = new ArrayList<>();
+    public final static ArrayList<Page> pages = new ArrayList<>();
 
     public static Page get(Inventory inventory) {
         for (Page page : pages) {

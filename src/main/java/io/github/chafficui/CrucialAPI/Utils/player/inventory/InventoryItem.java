@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class InventoryItem {
@@ -13,6 +14,7 @@ public class InventoryItem {
     private final String name;
     private final Action action;
     private final List<String> lore;
+    public final HashMap<String, Object> extraData = new HashMap<>();
 
     public InventoryItem(int slot, Material material, String name, List<String> lore, Action action) {
         this.slot = slot;
