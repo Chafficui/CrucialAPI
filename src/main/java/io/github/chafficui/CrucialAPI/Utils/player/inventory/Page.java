@@ -52,6 +52,11 @@ public class Page {
         pages.add(this);
     }
 
+
+    private void populate() {
+        addItem(new InventoryItem(0, new ItemStack(Material.RED_STAINED_GLASS_PANE), click -> click.getPlayer().closeInventory()));
+    }
+
     public void open(Player player) {
         inventory = Bukkit.createInventory(null, size, title);
         reloadInventory();
@@ -66,13 +71,13 @@ public class Page {
     public void reloadInventory() {
         if (inventory != null) {
             inventory.clear();
+            for (int i = 0; i < inventory.getSize(); i++) {
+                inventory.setItem(i, new ItemStack(fillMaterial));
+            }
+            inventoryItems.clear();
+            populate();
             for (InventoryItem item : inventoryItems) {
                 inventory.setItem(item.getSlot(), item.getItem());
-            }
-            for (int i = 0; i < inventory.getSize(); i++) {
-                if(inventory.getItem(i) == null) {
-                    inventory.setItem(i, new ItemStack(fillMaterial));
-                }
             }
         }
     }
