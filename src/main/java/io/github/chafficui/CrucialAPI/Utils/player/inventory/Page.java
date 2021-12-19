@@ -53,7 +53,7 @@ public class Page {
     }
 
 
-    private void populate() {
+    public void populate() {
         addItem(new InventoryItem(0, new ItemStack(Material.RED_STAINED_GLASS_PANE), click -> click.getPlayer().closeInventory()));
     }
 
