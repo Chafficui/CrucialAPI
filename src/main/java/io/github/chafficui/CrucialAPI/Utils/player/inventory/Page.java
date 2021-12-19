@@ -1,9 +1,11 @@
 package io.github.chafficui.CrucialAPI.Utils.player.inventory;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +32,10 @@ public class Page {
 
     private final int size;
     private final String title;
-    private final ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
+    protected final ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
     private Inventory inventory;
     public final HashMap<String, Object> extraData = new HashMap<>();
+    private final Material fillMaterial;
 
     /**
      * Every child needs to do super() in its constructor.
@@ -40,11 +43,12 @@ public class Page {
      * @param size  of the inventory. Can be between 1 and 6.
      * @param title of the inventory.
      */
-    public Page(int size, String title) {
+    public Page(int size, String title, Material fillMaterial) {
         if (size > 6 || size < 1)
             throw new IllegalArgumentException("Size of an inventory can only be between 1 and 6!");
         this.size = size * 9;
         this.title = title;
+        this.fillMaterial = fillMaterial;
         pages.add(this);
     }
 
@@ -64,6 +68,11 @@ public class Page {
             inventory.clear();
             for (InventoryItem item : inventoryItems) {
                 inventory.setItem(item.getSlot(), item.getItem());
+            }
+            for (int i = 0; i < inventory.getSize(); i++) {
+                if(inventory.getItem(i) == null) {
+                    inventory.setItem(i, new ItemStack(fillMaterial));
+                }
             }
         }
     }

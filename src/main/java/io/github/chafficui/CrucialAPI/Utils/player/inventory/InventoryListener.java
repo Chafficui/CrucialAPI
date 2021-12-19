@@ -7,7 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 public class InventoryListener implements Listener {
     @EventHandler
@@ -26,10 +25,5 @@ public class InventoryListener implements Listener {
         if(page != null) {
             event.setCancelled(true);
         }
-    }
-
-    @EventHandler
-    public void onMove(PlayerMoveEvent event) {
-        Page.get(0).open(event.getPlayer());
     }
 }
