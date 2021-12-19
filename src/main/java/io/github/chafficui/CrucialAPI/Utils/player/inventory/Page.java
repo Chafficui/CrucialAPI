@@ -32,7 +32,7 @@ public class Page {
 
     private final int size;
     private final String title;
-    protected final ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
+    protected ArrayList<InventoryItem> inventoryItems = new ArrayList<>();
     private Inventory inventory;
     public final HashMap<String, Object> extraData = new HashMap<>();
     private final Material fillMaterial;
@@ -65,7 +65,6 @@ public class Page {
 
     protected void addItem(InventoryItem item) {
         inventoryItems.add(item);
-        reloadInventory();
     }
 
     public void reloadInventory() {
@@ -74,7 +73,7 @@ public class Page {
             for (int i = 0; i < inventory.getSize(); i++) {
                 inventory.setItem(i, new ItemStack(fillMaterial));
             }
-            inventoryItems.clear();
+            inventoryItems = new ArrayList<>();
             populate();
             for (InventoryItem item : inventoryItems) {
                 inventory.setItem(item.getSlot(), item.getItem());

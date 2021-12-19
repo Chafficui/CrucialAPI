@@ -50,6 +50,14 @@ public class Item {
         }
     }
 
+    public static NamespacedKey createItem(String key, String name, ItemStack stack,  String[] recipe) throws CrucialException {
+        try{
+            return addRecipe(key, name, recipe, stack);
+        } catch(IllegalArgumentException e){
+            throw new CrucialException(2);
+        }
+    }
+
     private static NamespacedKey addRecipe(String key, String name, String[] recipe, ItemStack stack){
         name = name.replaceAll(" ", "_");
         key = key.replaceAll(" ", "_");

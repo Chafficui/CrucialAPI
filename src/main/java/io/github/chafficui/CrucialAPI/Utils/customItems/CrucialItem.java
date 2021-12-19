@@ -1,10 +1,13 @@
 package io.github.chafficui.CrucialAPI.Utils.customItems;
 
+import com.google.common.collect.Multimap;
 import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -18,19 +21,32 @@ public class CrucialItem {
      */
     @Deprecated
     public static String getKey(ItemStack stack){
-        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            return ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
-        }
-        return null;
+        return getId(stack).toString();
     }
 
-    public static UUID getId(ItemStack stack){
-        if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().getLore() != null){
-            String key = ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size()-1));
-            if(key.length() < 36){
+    public static UUID getId(ItemStack stack) {
+
+        if (stack != null && stack.getItemMeta() != null) {
+            String key = "";
+            Multimap<Attribute, AttributeModifier> attributeModifiers = stack.getItemMeta().getAttributeModifiers();
+            if (attributeModifiers != null) {
+                Collection<AttributeModifier> healthModifiers = attributeModifiers.get(Attribute.GENERIC_MAX_HEALTH);
+                if (healthModifiers != null) {
+                    for (AttributeModifier modifier : healthModifiers) {
+                            if(modifier.getName().equals("CRUCIALITEM_ID")) {
+                                return modifier.getUniqueId();
+                            }
+                    }
+                }
+            }
+            //TODO: remove in next major update
+            if (stack.getItemMeta().getLore() != null) {
+                key = ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size() - 1));
+            }
+            if (key.length() < 36) {
                 return null;
             }
-            return UUID.fromString(key.substring(0,36));
+            return UUID.fromString(key.substring(0, 36));
         }
         return null;
     }
@@ -57,13 +73,7 @@ public class CrucialItem {
      */
     @Deprecated
     public static CrucialItem getByKey(String key){
-        for (CrucialItem crucialItem :
-                CRUCIAL_ITEMS) {
-            if(crucialItem.getId().equals(UUID.fromString(key.substring(0,36)))){
-                return crucialItem;
-            }
-        }
-        return null;
+        return getById(UUID.fromString(key.substring(0,36)));
     }
 
     //Custom Item
@@ -161,14 +171,15 @@ public class CrucialItem {
     }
 
     private void registerRecipe() throws CrucialException {
+        AttributeModifier modifier = new AttributeModifier(this.id, "CRUCIALITEM_ID", 0, AttributeModifier.Operation.ADD_NUMBER);
         if(isHead){
             if(headOwner != null) {
-                namespacedKey = Item.createHead(id+type, name, getUniqueLore(), headOwner, recipe);
+                namespacedKey = Item.createItem(id+type, name, Stack.addAttributeModifier(Stack.getStack(headOwner, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
             } else {
-                namespacedKey = Item.createHead(id+type, name, getUniqueLore(), material, recipe);
+                namespacedKey = Item.createItem(id+type, name, Stack.addAttributeModifier(Stack.getStack(material, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
             }
         } else {
-            namespacedKey = Item.createItem(id+type, name, getUniqueLore(), Material.getMaterial(material), recipe);
+            namespacedKey = Item.createItem(id+type, name, Stack.addAttributeModifier(Stack.getStack(Material.getMaterial(material), name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
         }
     }
 
@@ -182,14 +193,15 @@ public class CrucialItem {
 
     public ItemStack getItemStack(){
         if(isRegistered){
+            AttributeModifier modifier = new AttributeModifier(this.id, "CRUCIALITEM_ID", 0, AttributeModifier.Operation.ADD_NUMBER);
             if(isHead){
                 if(headOwner != null) {
-                    return Stack.getStack(headOwner, name, getUniqueLore());
+                    return Stack.addAttributeModifier(Stack.getStack(headOwner, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier);
                 } else {
-                    return Stack.getStack(material, name, getUniqueLore());
+                    return Stack.addAttributeModifier(Stack.getStack(material, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier);
                 }
             } else {
-                return Stack.getStack(Material.getMaterial(material), name, getUniqueLore());
+                return Stack.addAttributeModifier(Stack.getStack(Material.getMaterial(material), name, lore), Attribute.GENERIC_MAX_HEALTH, modifier);
             }
         }
         return null;
@@ -203,6 +215,10 @@ public class CrucialItem {
         return String.valueOf(lore);
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public List<String> getUniqueLore(){
         List<String> uniqueLore = new ArrayList<>(lore);
         uniqueLore.add("");

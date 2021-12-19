@@ -1,13 +1,17 @@
 package io.github.chafficui.CrucialAPI.Utils.customItems;
 
+import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -80,6 +84,13 @@ public class Stack {
         if(shiny)
             meta.addEnchant(Enchantment.DURABILITY, 0, true);
         return getCleanMeta(stack, meta);
+    }
+
+    public static ItemStack addAttributeModifier(ItemStack stack, Attribute attribute, AttributeModifier modifier) {
+        ItemMeta meta = stack.getItemMeta();
+        meta.addAttributeModifier(attribute, modifier);
+        stack.setItemMeta(meta);
+        return stack;
     }
 
     private static ItemStack getCleanMeta(ItemStack stack, ItemMeta meta) {
