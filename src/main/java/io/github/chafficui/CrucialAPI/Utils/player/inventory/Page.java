@@ -36,6 +36,7 @@ public class Page {
     private Inventory inventory;
     public final HashMap<String, Object> extraData = new HashMap<>();
     private final Material fillMaterial;
+    private boolean isMovable;
 
     /**
      * Every child needs to do super() in its constructor.
@@ -87,5 +88,17 @@ public class Page {
                 item.execute(new InventoryClick(event, this));
             }
         }
+    }
+
+    public boolean isMovable() {
+        return isMovable;
+    }
+
+    public void setMovable(boolean movable) {
+        isMovable = movable;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

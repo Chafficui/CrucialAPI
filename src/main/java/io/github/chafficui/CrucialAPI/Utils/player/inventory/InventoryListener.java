@@ -23,7 +23,9 @@ public class InventoryListener implements Listener {
     public void onInventoryClick(InventoryPickupItemEvent event) {
         Page page = Page.get(event.getInventory());
         if(page != null) {
-            event.setCancelled(true);
+            if(!page.isMovable() || InventoryItem.isInventoryItem(event.getItem().getItemStack())) {
+                event.setCancelled(true);
+            }
         }
     }
 }
