@@ -3,6 +3,7 @@ package io.github.chafficui.CrucialAPI.Utils.player.inventory;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 
 public class InventoryClick {
     private final InventoryClickEvent event;
@@ -27,5 +28,9 @@ public class InventoryClick {
 
     public Player getPlayer() {
         return (Player) event.getWhoClicked();
+    }
+
+    public Inventory getClickedInventory() {
+        return page.getInventory();
     }
 }
