@@ -49,6 +49,20 @@ public class InventoryItem {
         this.action = action;
     }
 
+    public InventoryItem(int slot, ItemStack stack) {
+        this.slot = slot;
+        AttributeModifier modifier = new AttributeModifier("CRUCIALAPI_INVENTORYITEM", 0d, AttributeModifier.Operation.ADD_NUMBER);
+        this.stack = Stack.addAttributeModifier(stack, Attribute.GENERIC_MAX_HEALTH, modifier);
+        this.action = click -> {};
+    }
+
+    public InventoryItem(int slot) {
+        this.slot = slot;
+        AttributeModifier modifier = new AttributeModifier("CRUCIALAPI_INVENTORYITEM", 0d, AttributeModifier.Operation.ADD_NUMBER);
+        this.stack = Stack.addAttributeModifier(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), Attribute.GENERIC_MAX_HEALTH, modifier);
+        this.action = click -> {};
+    }
+
     public int getSlot() {
         return slot;
     }

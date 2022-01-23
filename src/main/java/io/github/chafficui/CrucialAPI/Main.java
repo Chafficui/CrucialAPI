@@ -25,8 +25,8 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        if (!Server.checkCompatibility("1.15", "1.16", "1.17")) {
-            Server.error("Your server is not compatible with this plugin. Please update to 1.15 or 1.16 or 1.17.");
+        if (!Server.checkCompatibility("1.15", "1.16", "1.17", "1.18")) {
+            Server.error("Your server is not compatible with this plugin. Please update to 1.15 or 1.16, 1.17 or 1.18.");
         }
         registerEvents(new CrucialItemEvents(), new InventoryListener());
         new Stats(this, 9549);
