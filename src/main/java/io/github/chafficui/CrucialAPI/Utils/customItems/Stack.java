@@ -87,6 +87,9 @@ public class Stack {
     }
 
     public static ItemStack addAttributeModifier(ItemStack stack, Attribute attribute, AttributeModifier modifier) {
+        if(stack == null || stack.getType().equals(Material.AIR) || attribute == null || modifier == null) {
+            return stack;
+        }
         ItemMeta meta = stack.getItemMeta();
         meta.addAttributeModifier(attribute, modifier);
         stack.setItemMeta(meta);
