@@ -4,18 +4,15 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryPickupItemEvent;
+import org.bukkit.event.inventory.*;
 
 public class InventoryListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Page page = Page.get(event.getInventory());
         HumanEntity entity = event.getWhoClicked();
-        if(page != null && event.getClick().equals(ClickType.LEFT) && entity instanceof Player) {
+        if(page != null && page.isMovable() && event.getClick().equals(ClickType.LEFT) && entity instanceof Player) {
             page.click(event);
-            event.setCancelled(true);
         }
     }
 
@@ -24,6 +21,7 @@ public class InventoryListener implements Listener {
         Page page = Page.get(event.getInventory());
         if(page != null) {
             if(!page.isMovable() || InventoryItem.isInventoryItem(event.getItem().getItemStack())) {
+                System.out.println("Seems to be an inventory item");
                 event.setCancelled(true);
             }
         }

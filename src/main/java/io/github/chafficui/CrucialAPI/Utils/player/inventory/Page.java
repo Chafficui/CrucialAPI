@@ -86,7 +86,11 @@ public class Page {
         for (InventoryItem item : inventoryItems) {
             if (item.getSlot() == event.getSlot()) {
                 item.execute(new InventoryClick(event, this));
+                event.setCancelled(true);
             }
+        }
+        if(!isMovable()) {
+            event.setCancelled(true);
         }
     }
 
