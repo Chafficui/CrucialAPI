@@ -2,6 +2,7 @@ package io.github.chafficui.CrucialAPI.Utils.player.inventory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -36,7 +37,7 @@ public class Page {
     private Inventory inventory;
     public final HashMap<String, Object> extraData = new HashMap<>();
     private final Material fillMaterial;
-    private boolean isMovable;
+    protected boolean isMovable;
 
     /**
      * Every child needs to do super() in its constructor.
@@ -83,23 +84,20 @@ public class Page {
     }
 
     public void click(InventoryClickEvent event) {
-        for (InventoryItem item : inventoryItems) {
-            if (item.getSlot() == event.getSlot()) {
-                item.execute(new InventoryClick(event, this));
+        HumanEntity entity = event.getWhoClicked();
+        if (entity instanceof Player && event.isLeftClick()) {
+            Player player = (Player) entity;
+
+            for (InventoryItem item : inventoryItems) {
+                if (item.getSlot() == event.getSlot()) {
+                    item.execute(new InventoryClick(event, this));
+                    event.setCancelled(true);
+                }
+            }
+            if(!isMovable) {
                 event.setCancelled(true);
             }
         }
-        if(!isMovable()) {
-            event.setCancelled(true);
-        }
-    }
-
-    public boolean isMovable() {
-        return isMovable;
-    }
-
-    public void setMovable(boolean movable) {
-        isMovable = movable;
     }
 
     public Inventory getInventory() {
