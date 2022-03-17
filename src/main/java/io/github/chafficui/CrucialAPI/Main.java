@@ -5,7 +5,6 @@ import io.github.chafficui.CrucialAPI.Utils.Plugin;
 import io.github.chafficui.CrucialAPI.Utils.Server;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
 import io.github.chafficui.CrucialAPI.Utils.player.inventory.InventoryListener;
-import io.github.chafficui.CrucialAPI.Utils.player.inventory.Page;
 import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -88,7 +87,7 @@ public final class Main extends JavaPlugin {
     private void setupConfig() throws IOException {
         getConfig().options().header(getDescription().getName() + " (Version: " + version + ") by "
                 + getDescription().getAuthors());
-        getConfig().addDefault("settings.AUTO_UPDATE", true);
+        //getConfig().addDefault("settings.AUTO_UPDATE", true);
         getConfig().addDefault("settings.SHARE_STATS", true);
         getConfig().options().copyDefaults(true);
         getConfig().save("options.yml");
