@@ -1,7 +1,7 @@
 name: ${name}
 version: ${project.version}
 author:  ${project.organization.name}
+website:  ${project.organization.url}
 prefix: CrucialAPI
-softdepend: [TitleAPI]
 main: io.github.chafficui.CrucialAPI.Main
 api-version: 1.13

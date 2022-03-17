@@ -21,6 +21,7 @@ import java.nio.channels.ReadableByteChannel;
 
 public final class Main extends JavaPlugin {
     private final String version = getDescription().getVersion();
+    private Stats stats;
 
     @Override
     public void onEnable() {
@@ -28,8 +29,6 @@ public final class Main extends JavaPlugin {
         if (!Server.checkCompatibility("1.15", "1.16", "1.17", "1.18")) {
             Server.error("Your server is not compatible with this plugin. Please update to 1.15 or 1.16, 1.17 or 1.18.");
         }
-        registerEvents(new CrucialItemEvents(), new InventoryListener());
-        new Stats(this, 9549);
         try {
             setupConfig();
         } catch (IOException e) {
@@ -38,6 +37,10 @@ public final class Main extends JavaPlugin {
             } catch (CrucialException ex) {
                 ex.printStackTrace();
             }
+        }
+        registerEvents(new CrucialItemEvents(), new InventoryListener());
+        if(getConfig().getBoolean("settings.SHARE_STATS")) {
+            stats = new Stats(this, 9549);
         }
         Server.log(ChatColor.DARK_GREEN + getDescription().getName() + " is now enabled (Version: " + version + ") made by "
                 + ChatColor.AQUA + getDescription().getAuthors() + ".");

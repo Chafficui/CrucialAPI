@@ -73,7 +73,7 @@ public class Page {
         if (inventory != null) {
             inventory.clear();
             for (int i = 0; i < inventory.getSize(); i++) {
-                inventory.setItem(i, new ItemStack(fillMaterial));
+                inventory.setItem(i, new InventoryItem(i, new ItemStack(fillMaterial)).getItem());
             }
             inventoryItems = new ArrayList<>();
             populate();
@@ -84,19 +84,20 @@ public class Page {
     }
 
     public void click(InventoryClickEvent event) {
-        HumanEntity entity = event.getWhoClicked();
-        if (entity instanceof Player && event.isLeftClick()) {
-            Player player = (Player) entity;
-
+        if (event.getWhoClicked() instanceof Player && event.isLeftClick()) {
             for (InventoryItem item : inventoryItems) {
-                if (item.getSlot() == event.getSlot()) {
+                if (event.getCurrentItem() != null && item.getItem().getType() == event.getCurrentItem().getType() &&
+                item.getSlot() == event.getSlot()) {
                     item.execute(new InventoryClick(event, this));
-                    event.setCancelled(true);
+                    if(!item.isMovable){
+                        event.setCancelled(true);
+                    }
+                    return;
                 }
             }
-            if(!isMovable) {
-                event.setCancelled(true);
-            }
+        }
+        if(event.getCurrentItem() != null && event.getCurrentItem().getType() == fillMaterial) {
+            event.setCancelled(true);
         }
     }
 
@@ -106,6 +107,7 @@ public class Page {
                 return inventoryItem;
             }
         }
+        if(item.getType() == fillMaterial) return new InventoryItem(0, item);
         return null;
     }
 
