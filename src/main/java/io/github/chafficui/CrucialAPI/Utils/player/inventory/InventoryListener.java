@@ -17,7 +17,8 @@ public class InventoryListener implements Listener {
     public void onInventoryPickup(InventoryPickupItemEvent event) {
         Page page = Page.get(event.getInventory());
         if(page != null) {
-            if(!page.isMovable || InventoryItem.isInventoryItem(event.getItem().getItemStack())) {
+            InventoryItem item = page.getInventoryItem(event.getItem().getItemStack());
+            if((item != null && !item.isMovable) || (item == null && !page.isMovable)) {
                 event.setCancelled(true);
             }
         }
@@ -27,7 +28,8 @@ public class InventoryListener implements Listener {
     public void onInventoryMove(InventoryMoveItemEvent event) {
         Page page = Page.get(event.getSource());
         if(page != null) {
-            if(!page.isMovable || InventoryItem.isInventoryItem(event.getItem())) {
+            InventoryItem item = page.getInventoryItem(event.getItem());
+            if((item != null && !item.isMovable) || (item == null && !page.isMovable)) {
                 event.setCancelled(true);
             }
         }

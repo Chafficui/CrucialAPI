@@ -100,6 +100,15 @@ public class Page {
         }
     }
 
+    public InventoryItem getInventoryItem(ItemStack item) {
+        for (InventoryItem inventoryItem : inventoryItems) {
+            if (inventoryItem.getItem().equals(item)) {
+                return inventoryItem;
+            }
+        }
+        return null;
+    }
+
     public Inventory getInventory() {
         return inventory;
     }
