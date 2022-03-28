@@ -14,9 +14,9 @@ public class Localizer {
         //set all splitKey together to a string except the first one
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < splitKey.length; i++) {
-            sb.append(splitKey[i]);
+            sb.append(splitKey[i]).append("_");
         }
-        String localizedString = localized.getLocalizedString(sb.toString());
+        String localizedString = localized.getLocalizedString(sb.substring(0, sb.length() - 1));
         for (int i = 0; i < values.length; i++) {
             localizedString = localizedString.replace("{" + i + "}", values[i]);
         }
