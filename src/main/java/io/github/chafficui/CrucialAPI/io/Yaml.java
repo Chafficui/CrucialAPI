@@ -18,7 +18,7 @@ public class Yaml {
         File file = new File(datafolder, filename);
 
         if(!file.exists()){
-            file.mkdir();
+            datafolder.mkdirs();
             file.createNewFile();
         }
 
