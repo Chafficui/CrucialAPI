@@ -7,9 +7,17 @@ import java.io.File;
 import java.io.IOException;
 
 public class LocalizedFromYaml extends Localized {
-    YamlConfiguration yaml;
+    protected YamlConfiguration yaml;
+    private final File dataFolder;
+    private final String filePath;
     public LocalizedFromYaml(String identifier, File dataFolder, String filePath) throws IOException {
         super(identifier);
+        this.dataFolder = dataFolder;
+        this.filePath = filePath;
+        yaml = Yaml.loadFile(dataFolder, filePath);
+    }
+
+    public void reloadYaml() throws IOException {
         yaml = Yaml.loadFile(dataFolder, filePath);
     }
 
