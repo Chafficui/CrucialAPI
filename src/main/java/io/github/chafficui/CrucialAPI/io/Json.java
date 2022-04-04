@@ -1,6 +1,7 @@
 package io.github.chafficui.CrucialAPI.io;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 public class Json {
-    static Gson g = new Gson();
+    static Gson g = new GsonBuilder().setPrettyPrinting().create();
 
     public static void saveFile(String json, String filename) throws IOException {
         FileWriter file = new FileWriter(filename);
