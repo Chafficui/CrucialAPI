@@ -15,19 +15,25 @@ public class CrucialItemEvents implements Listener {
     @EventHandler
     private void onInteract(PlayerInteractEntityEvent event){
         ItemStack stack = event.getPlayer().getItemOnCursor();
-        event.setCancelled(cancelInteractionEvent(stack));
+        if(cancelInteractionEvent(stack)) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
     private void onInteract(PlayerInteractEvent event){
         ItemStack stack = event.getPlayer().getItemOnCursor();
-        event.setCancelled(cancelInteractionEvent(stack));
+        if(cancelInteractionEvent(stack)) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
     private void onInteract(PlayerInteractAtEntityEvent event){
         ItemStack stack = event.getPlayer().getItemOnCursor();
-        event.setCancelled(cancelInteractionEvent(stack));
+        if(cancelInteractionEvent(stack)) {
+            event.setCancelled(true);
+        }
     }
 
     private boolean cancelInteractionEvent(ItemStack stack){
