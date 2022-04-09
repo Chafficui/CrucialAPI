@@ -90,8 +90,7 @@ public class Stack {
         }
         ItemMeta meta = stack.getItemMeta();
         meta.addAttributeModifier(attribute, modifier);
-        stack.setItemMeta(meta);
-        return stack;
+        return getCleanMeta(stack, meta);
     }
 
     private static ItemStack getCleanMeta(ItemStack stack, ItemMeta meta) {
