@@ -27,7 +27,6 @@ public class CrucialItem {
     public static UUID getId(ItemStack stack) {
 
         if (stack != null && stack.getItemMeta() != null) {
-            String key = "";
             Multimap<Attribute, AttributeModifier> attributeModifiers = stack.getItemMeta().getAttributeModifiers();
             if (attributeModifiers != null) {
                 Collection<AttributeModifier> healthModifiers = attributeModifiers.get(Attribute.GENERIC_MAX_HEALTH);
@@ -39,14 +38,6 @@ public class CrucialItem {
                     }
                 }
             }
-            //TODO: remove in next major update
-            if (stack.getItemMeta().getLore() != null) {
-                key = ChatColor.stripColor(stack.getItemMeta().getLore().get(stack.getItemMeta().getLore().size() - 1));
-            }
-            if (key.length() < 36) {
-                return null;
-            }
-            return UUID.fromString(key.substring(0, 36));
         }
         return null;
     }
