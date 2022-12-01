@@ -2,7 +2,6 @@ package io.github.chafficui.CrucialAPI.Utils;
 
 import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.FileOutputStream;
@@ -11,7 +10,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-public class Plugin {
+public class CrucialAPI {
     private static final Main PLUGIN = Main.getPlugin(Main.class);
 
     public static String getVersion(){

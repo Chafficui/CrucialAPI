@@ -1,7 +1,7 @@
 package io.github.chafficui.CrucialAPI;
 
 import io.github.chafficui.CrucialAPI.Events.CrucialItemEvents;
-import io.github.chafficui.CrucialAPI.Utils.Plugin;
+import io.github.chafficui.CrucialAPI.Utils.CrucialAPI;
 import io.github.chafficui.CrucialAPI.Utils.Server;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
 import io.github.chafficui.CrucialAPI.Utils.player.inventory.InventoryListener;
@@ -64,7 +64,7 @@ public final class Main extends JavaPlugin {
     }
 
     /**
-     * @deprecated moved to {@link Plugin#getVersion()}
+     * @deprecated moved to {@link CrucialAPI#getVersion()}
      */
     @Deprecated
     public void downgradeToLegacyVersion(String version) throws CrucialException {
