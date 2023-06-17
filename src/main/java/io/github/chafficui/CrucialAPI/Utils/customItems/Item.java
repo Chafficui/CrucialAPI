@@ -26,20 +26,6 @@ public class Item {
         }
     }
 
-    /**
-     * @deprecated use {@link #createHead(String, String, List, UUID, String[])} instead
-     */
-    @Deprecated
-    public static NamespacedKey createHead(String key, String name, List<String> lore,
-                                           String head, String[] recipe) throws CrucialException {
-        try{
-            ItemStack stack = Stack.getStack(head, name, lore);
-            return addRecipe(key, name, recipe, stack);
-        } catch(IllegalArgumentException e){
-            throw new CrucialException(2);
-        }
-    }
-
     public static NamespacedKey createHead(String key, String name, List<String> lore,
                                            UUID headOwner, String[] recipe) throws CrucialException {
         try{
