@@ -16,18 +16,4 @@ public class Plugin {
     public static String getVersion(){
         return PLUGIN.getDescription().getVersion();
     }
-
-    /**
-     * @deprecated Auto updates won't be supported in v2.2 and higher
-     */
-    @Deprecated
-    public static void getVersion(String version, JavaPlugin plugin) throws IOException {
-        if(!version.equals(PLUGIN.getDescription().getVersion())) {
-            URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
-            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-            FileOutputStream fos = new FileOutputStream("plugins/CrucialAPI.jar");
-            fos.getChannel().transferFrom(rbc, 0L, Long.MAX_VALUE);
-            Bukkit.reload();
-        }
-    }
 }

@@ -53,26 +53,6 @@ public class Stack {
         return stack;
     }
 
-    /**
-     * @deprecated use {@link #getStack(UUID, String, List)} instead
-     */
-    @Deprecated
-    public static ItemStack getStack(String head, String name, List<String> lore){
-        ItemStack stack = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
-        SkullMeta meta = (SkullMeta) stack.getItemMeta();
-
-        assert meta != null;
-        getCleanMeta(stack, meta);
-        meta = (SkullMeta) stack.getItemMeta();
-
-        meta.setDisplayName(name);
-        meta.setOwner(head);
-        meta.setLore(lore);
-        stack.setItemMeta(meta);
-
-        return stack;
-    }
-
     public static ItemStack getStack(Material material, String name, List<String> lore, boolean shiny){
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();

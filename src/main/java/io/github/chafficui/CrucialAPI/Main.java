@@ -58,24 +58,6 @@ public final class Main extends JavaPlugin {
         return version;
     }
 
-    /**
-     * @deprecated Auto updates won't be supported in v2.2 and higher
-     */
-    @Deprecated
-    public void downgradeToLegacyVersion(String version) throws CrucialException {
-        if(!version.equalsIgnoreCase((this.version))){
-            try {
-                URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
-                ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-                FileOutputStream fos = new FileOutputStream("plugins/CrucialAPI.jar");
-                fos.getChannel().transferFrom(rbc, 0L, Long.MAX_VALUE);
-            } catch (IOException e) {
-                throw new CrucialException(28);
-            }
-            Bukkit.reload();
-        }
-    }
-
     private void setupConfig() throws IOException {
         getConfig().options().header(getDescription().getName() + " (Version: " + version + ") by "
                 + getDescription().getAuthors());
