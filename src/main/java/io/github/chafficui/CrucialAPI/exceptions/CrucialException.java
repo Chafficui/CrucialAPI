@@ -30,6 +30,9 @@ public class CrucialException extends Exception{
             case 10:
                 errorMessage = "Error 010: Could not save options.yml";
                 break;
+            case 11:
+                errorMessage = "Error 011: No owner was set for crucialhead.";
+                break;
             case 28:
                 errorMessage = "Error 028: Failed to download legacy version.";
                 break;

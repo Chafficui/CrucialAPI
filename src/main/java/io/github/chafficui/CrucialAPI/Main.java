@@ -64,7 +64,7 @@ public final class Main extends JavaPlugin {
     }
 
     /**
-     * @deprecated moved to {@link Plugin#getVersion()}
+     * @deprecated Auto updates won't be supported in v2.2 and higher
      */
     @Deprecated
     public void downgradeToLegacyVersion(String version) throws CrucialException {
@@ -84,7 +84,6 @@ public final class Main extends JavaPlugin {
     private void setupConfig() throws IOException {
         getConfig().options().header(getDescription().getName() + " (Version: " + version + ") by "
                 + getDescription().getAuthors());
-        //getConfig().addDefault("settings.AUTO_UPDATE", true);
         getConfig().addDefault("settings.SHARE_STATS", true);
         getConfig().options().copyDefaults(true);
         getConfig().save("options.yml");

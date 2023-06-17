@@ -20,7 +20,7 @@ public class CrucialItem {
      * @deprecated Use {@link CrucialItem#getId(ItemStack)} ()} instead.
      */
     @Deprecated
-    public static String getKey(ItemStack stack){
+    public static String getKey(ItemStack stack) {
         return getId(stack).toString();
     }
 
@@ -32,9 +32,9 @@ public class CrucialItem {
                 Collection<AttributeModifier> healthModifiers = attributeModifiers.get(Attribute.GENERIC_MAX_HEALTH);
                 if (healthModifiers != null) {
                     for (AttributeModifier modifier : healthModifiers) {
-                            if(modifier.getName().equals("CRUCIALITEM_ID")) {
-                                return modifier.getUniqueId();
-                            }
+                        if (modifier.getName().equals("CRUCIALITEM_ID")) {
+                            return modifier.getUniqueId();
+                        }
                     }
                 }
             }
@@ -42,17 +42,17 @@ public class CrucialItem {
         return null;
     }
 
-    public static CrucialItem getByStack(ItemStack stack){
+    public static CrucialItem getByStack(ItemStack stack) {
         UUID id = getId(stack);
-        if(id != null){
+        if (id != null) {
             return getById(id);
         }
         return null;
     }
 
-    public static CrucialItem getById(UUID id){
-        for(CrucialItem crucialItem: CRUCIAL_ITEMS){
-            if(crucialItem.id.equals(id)){
+    public static CrucialItem getById(UUID id) {
+        for (CrucialItem crucialItem : CRUCIAL_ITEMS) {
+            if (crucialItem.id.equals(id)) {
                 return crucialItem;
             }
         }
@@ -63,14 +63,22 @@ public class CrucialItem {
      * @deprecated Use {@link CrucialItem#getById(UUID)} ()} instead.
      */
     @Deprecated
-    public static CrucialItem getByKey(String key){
-        return getById(UUID.fromString(key.substring(0,36)));
+    public static CrucialItem getByKey(String key) {
+        return getById(UUID.fromString(key.substring(0, 36)));
     }
 
     //Custom Item
     protected NamespacedKey namespacedKey;
     protected String name = "";
+    /**
+     * @deprecated Use {@link CrucialHead} instead.
+     */
+    @Deprecated
     public boolean isHead = false;
+    /**
+     * @deprecated Use {@link CrucialHead} instead.
+     */
+    @Deprecated
     protected UUID headOwner = null;
     protected String material = "";
     protected List<String> lore = new ArrayList<>();
@@ -83,11 +91,15 @@ public class CrucialItem {
     public boolean isUsable = true;
     public boolean isAllowedForCrafting = false;
 
-    public CrucialItem(String type){
+    public CrucialItem(String type) {
         this.id = UUID.randomUUID();
         this.type = type;
     }
 
+    /**
+     * @deprecated Use {@link CrucialHead} instead.
+     */
+    @Deprecated
     public CrucialItem(String name, UUID owningPlayer, List<String> lore, String[] recipe, String type, boolean isCraftable, boolean isUsable, boolean isAllowedForCrafting) {
         this.id = UUID.randomUUID();
         this.name = name;
@@ -103,7 +115,7 @@ public class CrucialItem {
     }
 
     /**
-     * @deprecated
+     * @deprecated Use {@link CrucialHead} instead.
      */
     @Deprecated
     public CrucialItem(String name, String head, List<String> lore, String[] recipe, String type, boolean isCraftable, boolean isUsable, boolean isAllowedForCrafting) {
@@ -128,13 +140,12 @@ public class CrucialItem {
         this.isCraftable = isCraftable;
         this.isUsable = isUsable;
         this.isAllowedForCrafting = isAllowedForCrafting;
-        this.isHead = false;
         this.material = material.name();
     }
 
     public void unregister() {
-        if(isRegistered) {
-            if(Bukkit.getRecipe(namespacedKey) != null){
+        if (isRegistered) {
+            if (Bukkit.getRecipe(namespacedKey) != null) {
                 Bukkit.removeRecipe(namespacedKey);
             }
             CRUCIAL_ITEMS.remove(this);
@@ -143,8 +154,8 @@ public class CrucialItem {
     }
 
     public void register() throws CrucialException {
-        if(!isRegistered){
-            if(!CRUCIAL_ITEMS.contains(this) ) {
+        if (!isRegistered) {
+            if (!CRUCIAL_ITEMS.contains(this)) {
                 registerRecipe();
                 isRegistered = true;
                 CRUCIAL_ITEMS.add(this);
@@ -155,38 +166,40 @@ public class CrucialItem {
     }
 
     public void reload() throws CrucialException {
-        if(isRegistered){
+        if (isRegistered) {
             Bukkit.removeRecipe(namespacedKey);
             registerRecipe();
         }
     }
 
-    private void registerRecipe() throws CrucialException {
+    //TODO: Change to not use deprecated head methods
+    protected void registerRecipe() throws CrucialException {
         AttributeModifier modifier = new AttributeModifier(this.id, "CRUCIALITEM_ID", 0, AttributeModifier.Operation.ADD_NUMBER);
-        if(isHead){
-            if(headOwner != null) {
-                namespacedKey = Item.createItem(id+type, name, Stack.addAttributeModifier(Stack.getStack(headOwner, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
+        if (isHead) {
+            if (headOwner != null) {
+                namespacedKey = Item.createItem(id + type, name, Stack.addAttributeModifier(Stack.getStack(headOwner, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
             } else {
-                namespacedKey = Item.createItem(id+type, name, Stack.addAttributeModifier(Stack.getStack(material, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
+                namespacedKey = Item.createItem(id + type, name, Stack.addAttributeModifier(Stack.getStack(material, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
             }
         } else {
-            namespacedKey = Item.createItem(id+type, name, Stack.addAttributeModifier(Stack.getStack(Material.getMaterial(material), name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
+            namespacedKey = Item.createItem(id + type, name, Stack.addAttributeModifier(Stack.getStack(Material.getMaterial(material), name, lore), Attribute.GENERIC_MAX_HEALTH, modifier), recipe);
         }
     }
 
-    public void delete(){
-        if(isRegistered){
+    public void delete() {
+        if (isRegistered) {
             isRegistered = false;
             Bukkit.removeRecipe(namespacedKey);
             CRUCIAL_ITEMS.remove(this);
         }
     }
 
-    public ItemStack getItemStack(){
-        if(isRegistered){
+    //TODO: Change to not use deprecated head methods
+    public ItemStack getItemStack() {
+        if (isRegistered) {
             AttributeModifier modifier = new AttributeModifier(this.id, "CRUCIALITEM_ID", 0, AttributeModifier.Operation.ADD_NUMBER);
-            if(isHead){
-                if(headOwner != null) {
+            if (isHead) {
+                if (headOwner != null) {
                     return Stack.addAttributeModifier(Stack.getStack(headOwner, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier);
                 } else {
                     return Stack.addAttributeModifier(Stack.getStack(material, name, lore), Attribute.GENERIC_MAX_HEALTH, modifier);
@@ -198,11 +211,11 @@ public class CrucialItem {
         return null;
     }
 
-    public void setLore(List<String> lore){
+    public void setLore(List<String> lore) {
         this.lore = lore;
     }
 
-    public String getLore(){
+    public String getLore() {
         return String.valueOf(lore);
     }
 
@@ -210,7 +223,7 @@ public class CrucialItem {
      * @deprecated
      */
     @Deprecated
-    public List<String> getUniqueLore(){
+    public List<String> getUniqueLore() {
         List<String> uniqueLore = new ArrayList<>(lore);
         uniqueLore.add("");
         uniqueLore.add(ChatColor.DARK_GRAY + "_______________");
@@ -261,8 +274,8 @@ public class CrucialItem {
      * @deprecated Use {@link CrucialItem#getId()} ()} instead.
      */
     @Deprecated
-    public String getKey(){
-        return id+type;
+    public String getKey() {
+        return id + type;
     }
 
     public boolean isRegistered() {
@@ -271,7 +284,7 @@ public class CrucialItem {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof CrucialItem){
+        if (obj instanceof CrucialItem) {
             CrucialItem crucialItem = (CrucialItem) obj;
             return crucialItem.id == this.id && crucialItem.type.equalsIgnoreCase(this.type);
         }

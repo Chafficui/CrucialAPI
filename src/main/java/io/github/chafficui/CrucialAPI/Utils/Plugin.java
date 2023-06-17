@@ -2,7 +2,6 @@ package io.github.chafficui.CrucialAPI.Utils;
 
 import io.github.chafficui.CrucialAPI.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.FileOutputStream;
@@ -18,6 +17,10 @@ public class Plugin {
         return PLUGIN.getDescription().getVersion();
     }
 
+    /**
+     * @deprecated Auto updates won't be supported in v2.2 and higher
+     */
+    @Deprecated
     public static void getVersion(String version, JavaPlugin plugin) throws IOException {
         if(!version.equals(PLUGIN.getDescription().getVersion())) {
             URL website = new URL("https://github.com/Chafficui/CrucialAPI/releases/download/v" + version + "/CrucialAPI-v" + version + ".jar");
