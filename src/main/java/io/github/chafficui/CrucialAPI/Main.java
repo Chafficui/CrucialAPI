@@ -1,7 +1,6 @@
 package io.github.chafficui.CrucialAPI;
 
 import io.github.chafficui.CrucialAPI.Events.CrucialItemEvents;
-import io.github.chafficui.CrucialAPI.Utils.Plugin;
 import io.github.chafficui.CrucialAPI.Utils.Server;
 import io.github.chafficui.CrucialAPI.Utils.Stats;
 import io.github.chafficui.CrucialAPI.Utils.player.inventory.InventoryListener;
@@ -47,10 +46,6 @@ public final class Main extends JavaPlugin {
         // Plugin shutdown logic
         Bukkit.getScheduler().cancelTasks(this);
         Server.log(ChatColor.DARK_GREEN + getDescription().getName() + " is now disabled.");
-    }
-
-    public File getFile() {
-        return super.getFile();
     }
 
     private void registerEvents(Listener... listeners) {

@@ -40,7 +40,6 @@ public class Item {
         }
     }
 
-    //TODO: Update to use new head system
     public static NamespacedKey createHead(String key, String name, List<String> lore,
                                            UUID headOwner, String[] recipe) throws CrucialException {
         try{
