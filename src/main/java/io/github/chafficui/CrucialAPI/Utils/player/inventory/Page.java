@@ -1,5 +1,6 @@
 package io.github.chafficui.CrucialAPI.Utils.player.inventory;
 
+import io.github.chafficui.CrucialAPI.Utils.player.inventory.prefabs.InventoryItemPrefab;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -65,8 +66,24 @@ public class Page {
         player.openInventory(inventory);
     }
 
-    protected void addItem(InventoryItem item) {
+    public void addItem(InventoryItem item) {
         inventoryItems.add(item);
+    }
+
+    public void addItems(InventoryItem... items) {
+        for(InventoryItem item : items) {
+            addItem(item);
+        }
+    }
+
+    public void addItems(InventoryItemPrefab items) {
+        for(InventoryItem item : items.getItems()) {
+            addItem(item);
+        }
+    }
+
+    public void removeItem(InventoryItem item) {
+        inventoryItems.remove(item);
     }
 
     public void reloadInventory() {
