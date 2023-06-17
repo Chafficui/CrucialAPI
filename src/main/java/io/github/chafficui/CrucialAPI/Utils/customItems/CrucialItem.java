@@ -3,7 +3,6 @@ package io.github.chafficui.CrucialAPI.Utils.customItems;
 import com.google.common.collect.Multimap;
 import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;

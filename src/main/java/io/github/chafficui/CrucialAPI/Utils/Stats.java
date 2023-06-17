@@ -1,7 +1,6 @@
 package io.github.chafficui.CrucialAPI.Utils;
 
 import io.github.chafficui.CrucialAPI.Utils.api.BStats;
-import io.github.chafficui.CrucialAPI.exceptions.CrucialException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
