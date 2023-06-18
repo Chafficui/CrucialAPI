@@ -6,7 +6,7 @@
 
     <groupId>io.github.chafficui</groupId>
     <artifactId>CrucialAPI</artifactId>
-    <version>2.1.7</version>
+    <version>2.2.0</version>
 
     <name>CrucialAPI</name>
 
@@ -132,21 +132,14 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
+            <version>1.20.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.10</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.ChafficPlugins</groupId>
-            <artifactId>spigot-command-api</artifactId>
-            <version>33608e5a6f</version>
+            <version>2.10.1</version>
         </dependency>
     </dependencies>
-
-
 </project>
