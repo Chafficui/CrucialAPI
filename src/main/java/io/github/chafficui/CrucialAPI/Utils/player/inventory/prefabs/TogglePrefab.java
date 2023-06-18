@@ -1,5 +1,6 @@
 package io.github.chafficui.CrucialAPI.Utils.player.inventory.prefabs;
 
+import io.github.chafficui.CrucialAPI.Utils.customItems.Stack;
 import io.github.chafficui.CrucialAPI.Utils.player.inventory.InventoryItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +27,7 @@ public class TogglePrefab implements InventoryItemPrefab {
     }
 
     public TogglePrefab(int slot, InventoryItem.Action toggleOn, InventoryItem.Action toggleOff, boolean isOn) {
-        this(slot, new ItemStack(Material.GREEN_STAINED_GLASS_PANE), new ItemStack(Material.RED_STAINED_GLASS_PANE), toggleOn, toggleOff, isOn);
+        this(slot, Stack.getStack(Material.GREEN_WOOL, "§aON"), Stack.getStack(Material.RED_WOOL, "§cOFF"), toggleOn, toggleOff, isOn);
     }
 
     public TogglePrefab(int slot, InventoryItem.Action toggleOn, InventoryItem.Action toggleOff) {
